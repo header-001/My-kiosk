@@ -21,20 +21,20 @@
 	    <div data-role="page" id="page">
 	    	<div data-role="header" id="header">
 	    		<!-- a href="index.html">home</a -->
-	    		<!-- h1>Vodacom</h1 --><h1>Makis</h1>
+	    		<h1>Vodacom</h1>
 	    	</div>
 	    	<div data-role="content" id="content">
-	    		<h1 class="form-title">Connexion</h1>
-	    		<form data-inset="true">
+	    		<h1 class="form-title">Sign in</h1>
+	    		<form data-inset="true" class="login-form">
 	    			<p></p>
 	    			<span id="tempopin"></span>
 	    			<input type="hidden" name="Doaction" value="SingIn"/>
 	    			<input type="hidden" name="num" id="num"/>
 	    			<input type="number" name="pin" id="pin"/>
-	    			<div class="bloc-bouton ui-grid-b ui-responsive controlPin">
-		    			<a data-role="button" data-mini="false" data-direction="reverse" data-rel="back" data-inline="true" class="back ui-block-a">back</a>
-		    			<input type="submit" value="Renvoyer OTP" name="resend" id="resend" data-inline="true" class="ui-block-b loggin" />
-		    			<input type="submit" value="Se connecter" name="signin" id="signin" data-inline="true" class="ui-block-c loggin" />
+	    			<div class="bloc-bouton ui-grid-c ui-responsive controlPin">
+		    			<a data-role="button" data-direction="reverse" data-rel="back" data-inline="true" class="back ui-block-a">back</a>
+		    			<a data-role="button" id="resend" data-inline="true" class="login ui-block-b">Resend OTP</a>
+		    			<a data-role="button" id="signin" data-inline="true" class="login ui-block-c">Sign in</a>
 	    			</div>
 	    		</form>
 	    	</div>

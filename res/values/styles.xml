@@ -17,4 +17,8 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="MyVodacom" parent="@android:style/Theme.NoTitleBar">
+		<item name="android:windowBackground">@drawable/bg_launcher</item>
+    </style>
+    
 </resources>

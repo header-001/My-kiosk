@@ -1,0 +1,81 @@
+@media all and (max-width: 479px){
+	.ui-responsive .ui-block-a, .ui-responsive .ui-block-b, .ui-responsive .ui-block-c, .ui-responsive .ui-block-d, .ui-responsive .ui-block-e {
+		width: 100%;
+		float: none;
+	}
+	#content .form-title, 
+	#content form{
+		width:85%;
+	}
+	#content form div.bloc-bouton a{
+	   	margin: 0 0.1em 1.5em;
+	   	width: 99%;
+	}
+	#content form div.bloc-bouton a ~ a {
+	   	margin: 0 0.1em 1.5em;
+	}
+	#content .content-primary{
+    	width: 100%;
+    	overflow: hidden;
+	}
+	#content .content-secondary{
+    	width: 100%;
+    	overflow: hidden;
+    	min-height:250px;
+	}
+	.grid .ui-listview .ui-li {
+	    margin-right: auto;
+	    margin-left: auto;
+	    max-width: 98%;
+	}
+	
+}
+@media all and (min-width: 480px){
+	
+	.ui-grid-b>:nth-child(n) {
+		width: 33.333%;
+		margin-right: -.5px;
+	}
+	.ui-grid-a .ui-block-a, .ui-grid-a .ui-block-b {
+		width: 49.95%;
+	}
+	.ui-grid-b .ui-block-a, .ui-grid-b .ui-block-b, .ui-grid-b .ui-block-c {
+		width: 33.25%;
+	}
+	.ui-responsive .ui-block-a, .ui-responsive .ui-block-b, .ui-responsive .ui-block-c, .ui-responsive .ui-block-d, .ui-responsive .ui-block-e {
+		float: left;
+	}
+	
+	#content .form-title, 
+	#content form{
+		width:65%;
+	}
+	#content form div.bloc-bouton.controlPin .back ~ div {
+    	font-weight: normal;
+	    margin: 0 0 0 6%;
+	    width: 30%;
+	}
+	#content .content-primary{
+    	width: 73%;
+    	float: left;
+    	padding:0 1%;
+	}
+	#content .content-secondary{
+    	width: 25%;
+    	min-height: 520px;
+    	position: relative;
+		float: left;
+	}
+	#content .content-secondary .ui-li .ui-btn-text a{
+    	white-space: pre-wrap;
+	}
+	
+	.iosSlider {
+		width: 929px;
+		height: 400px;
+	}	
+	.iosSlider .slider .item {
+		width: 929px;
+		height: 400px;
+	}
+}

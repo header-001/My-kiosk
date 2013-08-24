@@ -1,16 +1,89 @@
+
 @media all and (max-width: 479px){
 	#content .form-title, 
 	#content form{
 		width:85%;
 	}
+	#content form div.bloc-bouton a{
+	   	margin: 0 0.1em 1.5em;
+	   	width: 99%;
+	}
+	#content form div.bloc-bouton a ~ a {
+	   	margin: 0 0.1em 1.5em;
+	}
 	#content .content-primary{
     	width: 100%;
+    	overflow: hidden;
 	}
 	#content .content-secondary{
     	width: 100%;
+    	overflow: hidden;
+    	min-height:250px;
+	}
+	.grid .ui-listview .ui-li {
+	    margin-right: auto;
+	    margin-left: auto;
+	    max-width: 98%;
 	}
 }
-
+/*
+@media all and (max-width: 480px){
+	
+	#content .form-title, 
+	#content form{
+		width:65%;
+	}
+	#content form div.bloc-bouton.controlPin .back ~ div {
+    	font-weight: normal;
+	    margin: 0 0 0 6%;
+	    width: 30%;
+	}
+	#content .content-primary{
+    	width: 75%;
+    	float: left;
+	}
+	#content .content-secondary{
+    	width: 25%;
+		position: relative;
+		float: left;
+	}
+	#content .content-secondary .ui-li .ui-btn-text a{
+    	white-space: pre-wrap;
+	}
+	#content .content-secondary .deconnexion{
+	 	
+	}
+	.grid .ui-listview {
+	    padding: 0 1%;
+		margin-left: 1em;
+	}
+	.grid .ui-listview .ui-li {
+	    float: left;
+	    width: 100%;
+	}
+	.content-primary.grid .ui-listview .summary{
+		margin-right: 1em;
+	}
+	.content-primary.grid .ui-listview .data{
+		margin-right: 1em;
+	}
+	#content .content-secondary .deconnexion {
+		bottom: 0.5em;
+	    left: 1%;
+	    right: inherit;
+	    position: fixed;
+	}
+	.shop .content-primary{
+		padding-top:1em;
+	}
+	.shop .content-primary > *{
+		margin-left:1em;
+	}
+}
+*/
+/* 1280 x 800 
+@media all and (min-width: 790px){
+*/
 @media all and (min-width: 480px){
 	
 	#content .form-title, 
@@ -24,28 +97,21 @@
 	}
 	#content .content-primary{
     	width: 75%;
+    	float: left;
 	}
 	#content .content-secondary{
     	width: 25%;
     	min-height: 520px;
     	position: relative;
+		float: left;
 	}
-	#content .content-secondary .deconnexion{
-	 	bottom: 0.5em;
-	    position: absolute;
-	    right: 0;
+	#content .content-secondary .ui-li .ui-btn-text a{
+    	white-space: pre-wrap;
 	}
-	.grid .ui-listview {
-	    padding: 0 1%;
-	}
-	.grid .ui-listview .ui-li {
-	    float: left;
-	    width: 48%;
-	}
-	.content-primary.grid .ui-listview .summary{
-		margin-right: 1%;
-	}
-	.content-primary.grid .ui-listview .data{
-		margin-right: 1%;
+
+	.shop .content-primary > *{
+		margin-left:1em;
 	}
 }
+
+@media all and (min-width: 480px){

@@ -1,25 +1,5 @@
 @CHARSET "ISO-8859-1";
-
-.index{
-	background:none;
-	background-color:#CF0606;
-}
-#page{
-	text-shadow: none;
-	font-family:"century gothic", century gothic, sans-serif;
-}
-#header h1{
-	background-image: url("../img/logo.png");
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    font-size: 1.3em;
-    margin-bottom: 0.7%;
-    margin-left: 1%;
-    margin-top: 0.7%;
-    padding-left: 40px;
-    text-align: left;
-}
+/*
 
 .home{
 	width:70%;
@@ -34,6 +14,7 @@
 	clear:right;
 	margin: 0 0 1em;
     padding: 0;
+    padding-top:30%
 }
 .home .choix-lang li{
 	text-align:right;
@@ -68,6 +49,7 @@
 .home h2{
 	clear:both;
 	float:none;
+	font-size: 1.8em;
 }
 .home #start{
   padding: 8px 3px;
@@ -75,43 +57,48 @@
 .home #start > span{
 	padding: 0.6em;
 }
+*/
 #content .form-title,
 #content form{
 	margin:0 auto;
 	font-weight: normal;
 }
+#content .form-title{
+	margin-bottom:0.5em;
+}
 #content form{
-	margin-top: 2%;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 	    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 	    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 3% 1% 0 1%;
     overflow: hidden;
     min-height: 180px;
+    color:#000;
 }
  #content form div.ui-input-text,
  #content form div.bloc-bouton {
     width: 90%;
     margin: 0 auto 2%;
 }
+ #content form div.bloc-bouton {
+	padding:0.5em 0;
+}
 #content form div.ui-input-text{
-	margin-bottom:5%;
+	margin-bottom:3%;
 }
-#content form div.bloc-bouton .back{
-	width:25%;
+#content form div.bloc-bouton a{
    	font-weight:normal;
     margin: 0;
+	margin-left: 0.1em;
 }
-#content form div.bloc-bouton .back ~ div{
-   	font-weight:normal;
-    margin: 0;
-	width:50%;
-	margin-left: 17%;
+#content form div.bloc-bouton a ~ a{
+	margin-left: 12%;
 }
-#content form div.bloc-bouton .back ~ div span{
-	padding-left: 5px;
-   	padding-right: 5px;
+#content form div.bloc-bouton a ~ a#send{
+	float:right;
+	margin-right: 0.1em;
 }
+
 
 /* If you want to add shadow, don't kill the focus style. */
 .grid .ui-listview .block:not(.ui-focus) {
@@ -212,98 +199,11 @@
 }
 .content-primary .contenu .detail .consomme span:last-child{
 	float:right;
-
 }
-
-#wrapper{
-	margin-top:51px;
-	padding: 0 1%;
+.content-primary .ui-controlgroup-controls{
+	display:block;
 }
-
-
-#scroller {
-	position:absolute; z-index:1;
-/*	-webkit-touch-callout:none;*/
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	width:100%;
-	padding:0;
-}
-
-#scroller ul {
-	list-style:none;
-	padding:0;
-	margin:0;
-	width:100%;
-	text-align:left;
-}
-
-#scroller li {
-	padding:0 10px;
-	height:40px;
-	line-height:40px;
-	border-bottom:1px solid #ccc;
-	border-top:1px solid #fff;
-	background-color:#fafafa;
-	font-size:14px;
-}
-
-#myFrame {
-	position:absolute;
-	top:0; left:0;
-}
-
-
-
-/**
- *
- * Pull down styles
- *
- */
-#pullDown, #pullUp {
-	background:#fff;
-	height:40px;
-	line-height:40px;
-	padding:5px 10px;
-	border-bottom:1px solid #ccc;
-	font-weight:bold;
-	font-size:14px;
-	color:#888;
-}
-#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
-	display:block; float:left;
-	width:40px; height:40px;
-	background:url(pull-icon@2x.png) 0 0 no-repeat;
-	-webkit-background-size:40px 80px; background-size:40px 80px;
-	-webkit-transition-property:-webkit-transform;
-	-webkit-transition-duration:250ms;	
-}
-#pullDown .pullDownIcon {
-	-webkit-transform:rotate(0deg) translateZ(0);
-}
-#pullUp .pullUpIcon  {
-	-webkit-transform:rotate(-180deg) translateZ(0);
-}
-
-#pullDown.flip .pullDownIcon {
-	-webkit-transform:rotate(-180deg) translateZ(0);
-}
-
-#pullUp.flip .pullUpIcon {
-	-webkit-transform:rotate(0deg) translateZ(0);
-}
-
-#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
-	background-position:0 100%;
-	-webkit-transform:rotate(0deg) translateZ(0);
-	-webkit-transition-duration:0ms;
-
-	-webkit-animation-name:loading;
-	-webkit-animation-duration:2s;
-	-webkit-animation-iteration-count:infinite;
-	-webkit-animation-timing-function:linear;
-}
-
-@-webkit-keyframes loading {
-	from { -webkit-transform:rotate(0deg) translateZ(0); }
-	to { -webkit-transform:rotate(360deg) translateZ(0); }
+.content-primary .ui-controlgroup-horizontal .ui-btn {
+    border-right-width: 0;
+    width: 33.1%;
 }

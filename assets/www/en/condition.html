@@ -3,11 +3,15 @@
 	<head>
 		<title>Makis</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">    
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		   
 		<link rel="stylesheet" href="../jquery/themes/custom-themeA.css" />
 		<link rel="stylesheet" type="text/css" href="../jquery/jquery.mobile.structure-1.3.1.min.css"/>
+		
 		<link rel="stylesheet"  href="../css/style.css" />
 		<link rel="stylesheet"  href="../css/grid.css" />
+		
+		<link rel="stylesheet"  href="../css/styles.css" />
 		
     	<script type="text/javascript" charset="utf-8" src="../jquery/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/init.js"></script>
@@ -16,28 +20,36 @@
 		<script type="text/javascript" charset="utf-8" src="../js/cordova.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/iscroll.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/script.js"></script>
+		
+		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
 	<body id="body">
 	    <div data-role="page" id="page" class="index">
-	    	<div data-role=content>
-	    		<div class="home">
-		    		<h1>vodacom</h1>
-		    		<h2>Self-service kiosk</h2>
-					<h3>View my account summary</h3>
-					<h3>Manage my service</h3>
-					<h3>Manage my profile</h3>
-					<h3>Buy bundles</h3>
-		    		<p>
-		    			Please accept the <a href="#popupCondition" data-rel="popup"  data-position-to="window">terms & conditions</a> to continue 
-		    			<a href="access.html" id="start" data-role="button" data-mini="false" data-inline="true"  class="force-reload"><boutom type="bouton" name="start"/></a>
-		    		</p>
-	    		</div>
+	    	<div data-role="content" class="content">
+	    		<h1><strong>voda</strong>com</h1>
+	    		<h2 class="ui-btn-corner-all">
+	    			<span class="ui-btn-inner">
+	    				<span class="ui-btn-text">Self-service kiosk</span>
+	    			</span>
+	    		</h2>
+	    		<ul>
+					<li>View my account summary</li>
+					<li>Manage my service</li>
+					<li>Manage my profile</li>
+					<li>Activate package</li>
+					<li>Buy</li>
+	    		</ul>
+	    		<p>
+	    			Please accept the <a href="#popupCondition" data-rel="popup"  data-position-to="window">terms & conditions</a> pour  
+	    			<a href="access.html" id="start" data-role="button" data-mini="true" data-inline="true"  class="force-reload">continuer</a>
+	    		</p>
 	  		</div>
 		    <div id="popupCondition" data-role="popup" class="ui-content">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 		    	<strong>Terms of use</strong>
 		    	<div>
-		    		coool
+		    		EN : Cumque pertinacius ut legum gnarus accusatorem flagitaret atque sollemnia, doctus id Caesar libertatemque superbiam ratus tamquam obtrectatorem audacem excarnificari praecepit, qui ita evisceratus ut cruciatibus membra deessent, inplorans caelo iustitiam, torvum renidens fundato pectore mansit inmobilis nec se incusare nec quemquam alium passus et tandem nec confessus nec confutatus cum abiecto consorte poenali est morte multatus. et ducebatur intrepidus temporum iniquitati insultans, imitatus Zenonem illum veterem Stoicum qui ut mentiretur quaedam laceratus diutius, avulsam sedibus linguam suam cum cruento sputamine in oculos interrogantis Cyprii regis inpegit.
+		    		<input type="checkbox" name="accept" id="cond"/>
 		    	</div>
 		    </div>
 	    </div>
