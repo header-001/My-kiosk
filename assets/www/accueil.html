@@ -22,23 +22,19 @@
 		<script type="text/javascript" charset="utf-8" src="js/scripts.js"></script>
 	</head>
 	<body id="body">
-	    <div data-role="page" id="page" class="index accueil">
+	    <div data-role="page" id="accueil">
 	    	<div data-role="content" class="content">
     			<h1><strong>voda</strong>com</h1>
-	    		<ul data-role="listview" class="choix-lang">
-	    			<li data-lang="fr">Choisissez votre langue</li>
-	    			<li data-lang="en">Choose your language</li>
+	    		<ul class="choix-lang">
+	    			<li>Choisissez votre langue</li>
+	    			<li>Choose your language</li>
 	    		</ul>
-				<!-- div class="langues">
-					<a href="fr/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true" class="force-reload">Français</a>
-					<a href="en/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true">English</a>
-				</div -->
-				<form action="#" class="langues">
+				<form action="ChoixLang" class="langues">
 					<select name="lang" data-inline="true">
 						<option value="fr/condition.html?page=condition&lang=fr">Français</option>
 						<!--  option value="en/condition.html?page=condition&lang=en">English</option -->
 					</select>
-					<input type="submit" value="Entrer" name="Entrer" class="entrer" data-inline="true"/>
+					<input type="submit" value="Entrer" name="ActionChoixLang" id="ActionChoixLang" class="submit" data-inline="true"/>
 				</form>
     		</div>
 	    </div>

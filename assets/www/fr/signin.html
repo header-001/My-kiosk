@@ -22,17 +22,17 @@
 		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
 	<body id="body">
-	    <div data-role="page" id="page" class="page">
+	    <div data-role="page" id="page">
 	    	<div data-role="header" id="header" data-position="fixed">
 	    		<h1><strong>voda</strong>com</h1>
 	    	</div>
 	    	<div data-role="content" id="content" class="ui-responsive">
 	    		<h1 class="form-title">Connexion</h1>
 	    		<form data-inset="true" class="login-form">
-	    			<input type="number" name="num" />
-	    			<div class="bloc-bouton ui-grid-a ui-responsive">
-		    			<a data-role="button" data-direction="reverse" data-rel="back" class="back  ui-block-a">Retour</a>
-		    			<a data-role="button" id="send" class="login  ui-block-b">Recevoir un PIN</a>
+	    			<input type="number" name="num" placeholder="Veuiller entrer votre numéro"/>
+	    			<div class="bloc-bouton ui-grid-a">
+		    			<a data-role="button"  data-icon="arrow-l" data-iconpos="left" class="back ui-block-a" data-direction="reverse" data-rel="back">Retour</a>
+		    			<a data-role="button" data-icon="arrow-r" data-iconpos="right" class="submit ui-block-b" id="ActionGenerationPin">Recevoir un PIN</a>
 	    			</div>
 	    		</form>
 	    	</div>

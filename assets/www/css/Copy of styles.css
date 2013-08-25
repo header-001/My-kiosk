@@ -1,0 +1,437 @@
+h1,h2,h3,h4,
+ul,li,a,
+.ui-body-c .ui-link{
+	font-weight: normal;
+	list-style:none;
+	color: inherit;
+	margin:0;
+	padding:0;
+}
+html{
+	background:none;
+	background-image: url("../img/bg.png");
+	background-position: center center;
+}
+.ui-icon, .ui-icon-searchfield:after {
+background-color: #b40e0e /*{global-icon-color}*/;
+}
+
+.ui-bar-a {
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #0680D6 /*{a-bar-background-start}*/), to( #035892 /*{a-bar-background-end}*/));
+	background-image: -webkit-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -moz-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -ms-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -o-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+}
+.ui-btn-inner{
+	padding: .3em 20px;
+}
+#body{
+	background:none;
+	background-image: url("../img/bg.png");
+	background-position: center center;
+}
+#page{
+	font-size: 1.5em;
+	text-shadow: none;
+	font-family:"century gothic", century gothic, sans-serif;
+}
+.home{
+	background:none;
+	background-image: url("../img/home.png");
+	background-position: center center;
+	width:100%;
+	padding:0;
+}
+
+ #body .index{
+	background: none;
+	padding:1% 0;
+}
+/*
+ #body .ui-page-active.index{
+	display: table;
+}
+
+ #body .index .content{
+	width:100%;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0 20%;
+}
+*/
+ #content{
+ 	padding: 0;
+ 	padding-bottom: 15px;
+ }
+ .index .langues{
+	
+}
+.index .choix-lang{
+	clear:right;
+	margin: 0 0 1em;
+    padding: 0;
+    padding-top:0
+}
+.index .choix-lang li{
+	text-align:right;
+	background:none;
+	border:none;
+	padding: 0.1em 0;
+	color:#fff;
+	font-weight: normal;
+}
+.index .langues a,
+.index .langues input,
+.index .langues .ui-btn-text{
+	color:#000;
+	font-weight: normal;
+	font-size: 1.5em;
+}
+.index .langues .ui-submit{
+	margin-top:5%;
+}
+.index div[data-role="content"]{
+	color: #fff;
+	width:70%;
+	margin:0 auto;
+	text-align:right;
+	/*display: table-cell;
+	vertical-align: middle;
+	padding: 0 20%;*/
+}
+.index div[data-role="content"] h2{
+	display:inline-block;
+	background-color:#fff;
+	color:blue;
+	font-size: 1.5em;
+	margin-bottom: 1em;
+}
+.index div[data-role="content"] h2{
+	display:inline-block;
+	background-color:#fff;
+	color:#083eb2;
+	font-size: 1.5em;
+	margin-bottom: 1em;
+	font-weight: bold;
+	padding-left: 2em;
+}
+.index div[data-role="content"] h2 .ui-btn-text{
+	font-size: 1.5em;
+}
+.index ul{
+}
+.index ul li{
+	margin:0.5em 0;
+}
+.index #start,
+.index .touch{
+	background:none;
+	background-image: url("../img/calk.png");
+	color:#083eb2;
+}
+.index .ui-btn-inner{
+	/*padding: .3em 30px .3em 10px;*/
+}
+#popupCondition{
+	width: 80%;
+	margin: 0 auto;
+}
+#popupCondition div{
+	margin-bottom:0.5em;
+}
+/*
+#popupCondition .condition{
+	 position: absolute;
+}
+*/
+#popupCondition .scrollable {
+	/* position: absolute;*/
+	/* top:0;
+	 left:0;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;*/
+}
+#popupCondition .ui-checkbox .ui-btn{
+	/* display: inline-block; */
+}
+#header h1{
+    font-size: 2em;
+    margin:0.2em 0;
+    padding-left: 0;
+    text-align: center;
+    font-weight:normal;
+    padding: 0;
+}
+.deconnexion{
+    padding:.5em 0;
+}
+.page{
+	color: #000;
+	background-color:#eaeaea;
+}
+.page .ui-btn-inner{
+	padding: 0.5em .8em;
+	font-weight: bold;
+}
+/**********/
+#content .form-title,
+#content .login-form{
+	margin:0 auto;
+	font-weight: normal;
+}
+#content .form-title{
+	margin-bottom:0.5em;
+	margin-top: 2%;
+	font-size: 2.5em;
+}
+#content .login-form{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 3% 1% 0 1%;
+    overflow: hidden;
+    min-height: 15em;
+    color:#000;
+}
+ #content .login-form div.ui-input-text,
+ #content .login-form div.bloc-bouton,
+  #content .login-form #{
+    width: 90%;
+    margin: 0 auto 2%;
+}
+ #content .login-form div.bloc-bouton {
+	padding:0.5em 0;
+}
+#content .login-form div.ui-input-text{
+	margin-bottom:3%;
+}
+#content .login-form div.ui-input-text input{
+	font-size:1em;
+	text-align: center;
+}
+#content .login-form div.bloc-bouton a{
+   	font-weight:normal;
+	margin:0;
+}
+#content .login-form div.bloc-bouton a .ui-btn-text{
+	font-size:1.5em;
+}
+/*
+#content form div.bloc-bouton a ~ a#send{
+	float:right;
+	margin-right: 0.1em;
+}
+*/
+/******************/
+.content-secondary{
+	padding-top: 13px;
+}
+.content-secondary ul.ui-listview{
+	margin: 0 1em;
+}
+.content-primary {
+	margin-top: 13px;
+   	background-color:#f8f8f8;
+}
+.content-primary >.ui-listview{
+    padding:0;
+	margin: 0 1em;
+	overflow:hidden;
+}
+.grid .ui-listview .ui-li {
+    float: left;
+    width: 48.5%;
+}
+/*** Résumé ****/
+
+.summary{
+	
+}
+.summary .info{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+	padding: 1em;
+	width:80%;
+	margin-left: 5%;
+	margin-top: 0;
+}
+.summary .info div{
+}
+.summary .info div label{
+	color:#666666;
+}
+.summary .info div span{
+	color:#045d9b;
+}
+.summary .info .moncredit {
+    float: right;
+    margin-top: 5%;
+}
+.summary .info .moncredit > label {
+    color: #047FBA !important;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.summary .forfaits{
+	width:90%;
+	margin-left: 5%;
+	margin-top: 3%;
+}
+.summary .link_account{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+	padding: 1em;
+	width:80%;
+	margin:  3% 0 0 5%;
+}
+.summary .link_account a{
+	
+}
+.account .info.edit-account{
+	width:95%;
+	margin-left: -1%;
+	margin-top: 0;
+	border:none;
+}
+.account .info.edit-account .field .ui-block-a,
+.account .info.edit-account .field .ui-block-b{
+	float:none;
+}
+.account .info.edit-account .field{
+	width:95%;
+}
+.account .info.edit-account fieldset{
+	border : 1px solid #d5d5d5;
+	padding: 0 0 2% 3%;
+}
+.account .info.edit-account legend{
+	padding:0.5% 1%;
+	margin: 0 1% 1% 0; 
+	font-size: 1.2em;
+}
+.account .info.edit-account .button{
+	width:95%;
+}
+.account .info.edit-account{
+	
+}
+.summary .forfaits fieldset{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+}
+.summary .forfaits fieldset legend{
+   background-color:#f8f8f8;
+   margin-left: 2em;
+   color:#666666;
+}
+.summary .forfaits fieldset ul{
+   	padding: 1em;
+   	overflow-y: scroll;
+	max-height: 250px;
+}
+.summary .forfaits .forfait {
+    clear: both;
+    display: block;
+    margin-top: 5px;
+    overflow: hidden;
+    width: 100%;
+}
+.summary .forfaits .forfait label {
+    display: block;
+    float: left;
+    margin-right: 20px;
+    text-align: right;
+    width: 100px;
+    font-size: .9em;
+}
+.summary .forfaits .forfait .progressBar {
+    background: none repeat scroll 0 0 #d5d5d5;
+    border: 1px solid #d5d5d5;
+    display: block;
+    float: left;
+    position: relative;
+    width: 70%;
+}
+.summary .forfaits .forfait .progressBar div{
+    color: #047FBA;
+    font-family: arial;
+    font-size: 3px;
+    height: 20px;
+    min-height: 20px;
+    overflow: hidden;
+    text-align: right;
+    text-indent: 9999px;
+    text-shadow: 0 0 2px #000000;
+}
+.summary .forfaits .forfait .progressBar .callbar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .progressBar .smsBar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .progressBar .dataBar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .descrition {
+    display: block;
+    float: left;
+    font-size: .8em;
+    margin-left: 23%;
+    margin-top: 5px;
+    width: 70%;	
+}
+.summary .forfaits .forfait .descrition label {
+    display: inline-block;
+    margin-right: 0;
+    text-align: left;
+    width: 33.333%;
+    color:#666666;
+}
+.summary .forfaits .forfait .descrition label span {
+    color: #E42322;
+}
+.summary .forfaits .forfait .descrition .gestionTrait {
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    padding: 0 5px;
+    width: 90px;
+}
+.summary .forfaits .forfait{
+	
+}
+
+/*** Shop ****/
+.shop #list{
+	/*min-height: 200px;	*/
+}
+.shop #list li{
+	min-height: 150px;
+}
+.shop #list article{
+	clear:both;
+	overflow:hidden;
+	padding: 0.5em 0;
+}
+.shop #list img{
+	width: 15%;
+	float: left;
+	margin-right: 1em;
+}
+.shop #list div{
+	width:50%;
+	float:left;
+	
+}
+.shop #list h1{
+	font-size: 1em;
+	padding: 0;
+	margin: 0 0 0.3em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+.shop #list span{
+	font-weight: bold;
+}
+

@@ -21,23 +21,21 @@
 		<script type="text/javascript" charset="utf-8" src="../js/jquerys.voda.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
-	<body id="body" class="theme">
-	    <div data-role="page" id="page" class="page">
+	<body id="body">
+	    <div data-role="page" id="page">
 	    	<div data-role="header" id="header" data-position="fixed">
-	    		<!-- a href="index.html">home</a -->
 	    		<h1>Vodacom</h1>
 	    	</div>
-	    	<div data-role="content" id="content">
+	    	<div data-role="content" id="content" class="ui-responsive">
 	    		<h1 class="form-title">Connexion</h1>
 	    		<form data-inset="true" class="login-form">
-	    			<p></p>
-	    			<span id="tempopin"></span>
+	    			<p id="tempopin"></p>
 	    			<input type="hidden" name="num" id="num"/>
-	    			<input type="number" name="pin" id="pin"/>
-	    			<div class="bloc-bouton ui-grid-b ui-responsive controlPin">
-		    			<a data-role="button" data-direction="reverse" data-rel="back" data-inline="true" class="back ui-block-a">Retour</a>
-		    			<a data-role="button" id="resend" data-inline="true" class="login ui-block-b">Renvoyer OTP</a>
-		    			<a data-role="button" id="signin" data-inline="true" class="login ui-block-c">Se connecter</a>
+	    			<input type="number" name="pin" id="pin" placeholder="Veuiller entrer votre Pin"/>
+	    			<div class="bloc-bouton ui-grid-b">
+		    			<a data-role="button" data-inline="true" data-icon="arrow-l" data-direction="reverse" data-rel="back" class="back ui-block-a">Retour</a>
+		    			<a data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" id="ActionLoggin" class="submit ui-block-c">Se connecter</a>
+		    			<a data-role="button" data-inline="true" data-icon="refresh" data-iconpos="left"  id="ActionReGenerationPin" class="submit ui-block-b">Renvoyer OTP</a>
 	    			</div>
 	    		</form>
 	    	</div>

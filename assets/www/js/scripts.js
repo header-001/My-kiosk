@@ -1,315 +1,283 @@
-document.addEventListener("deviceready", onDeviceReady, false);
+/* handset header
+ *
+ * Galaxy Tab2 10.1 : Mozilla/5.0 (Linux; U; Android 4.0.4; fr-fr; GT-P5100 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
+ * 
+*/
 
-function onDeviceReady() {
-	var height = $(window).height();
-	$('.home').height(height)
-	var timeout = setTimeout(function(){
-		$.mobile.changePage( "accueil.html", { transition: "pop"} );
-		clearTimeout(timeout);
-	}, 10000);
+if(navigator.platform == "Win32") 
+	var server = "http://localhost/vdc4/httpdocs/index.php";
+else
+	var server = "http://10.0.2.2/vdc4/httpdocs/index.php";
+	//var server = "http://192.168.200.102/vdc4/httpdocs/index.php";
+var server = "http://localhost/vdc4/httpdocs/index.php";
+//var server = "http://41.194.63.136";
+
+var Notification = {
+
+	beep : function(int){
+        navigator.notification.beep(int);
+    },
+    
+    vibrate : function(int){
+      navigator.notification.vibrate(int*1000);
+    },
+    
+    alertDialog : function(message, title, button) {
+        console.log("alertDialog()");
+        navigator.notification.alert(message,
+        function(){
+            console.log("Alert dismissed.");
+        },
+        title, button);
+        console.log("After alert");
+    },
+    
+    confirmDialog : function(message, title, buttons) {
+        navigator.notification.confirm(message,
+            function(r) {
+                if(r===0){
+                    console.log("Dismissed dialog without making a selection.");
+                    alert("Dismissed dialog without making a selection.");
+                }else{
+                    console.log("You selected " + r);
+                    alert("You selected " + (buttons.split(","))[r-1]);
+                }
+            },
+            title,
+            buttons);
+        alert(buttonIndex);
+    }
 }
 
+var MyVoda = {
+
+	condIsCheck : false,
+	currentLang : "fr",
+	currentPage : "",
+	urlVars : {},
+	msgPin : "",
+	catalogParams : {
+		"limit" 	: 2,
+		"offset"	: 0,
+		"sort"		: "priority",
+		"order"		: true,
+		"ContentType":"json",
+	},
 	
-function contentfixe(){
-    var height = $(window).height();
-    if($(".ui-page-active .home").length){
-    	$('.home').height(height)
-    }
-    if($(".index").length){
-    	$('.index').each(function(i,index){
-    		//alert($(index).find('.content').height())
-    		//alert($(index).height())
-    		//alert(height)
-    		//$(index).find('.content').css({"margin-top" : parseInt(height-$(index).height())/2})
-    	});
-    }
+	msg : {
+		Erreur:{
+			fr:{
+				Condition : "Veuiller accepter les conditions d'utilisation avant de continuer"
+			}
+		}
+	},
+
+	onDeviceReady : function(){
+		var timeout = setTimeout(function(){
+			$.mobile.changePage( "accueil.html", { transition: "pop"} );
+				clearTimeout(timeout);
+				}, 1000);
+	},
+	
+	/* 
+	 * fixe la taille du popoup par rapport à la taille du screem 
+	 */
+	fixePopup : function($popup){
+		
+		var pageH = $(".ui-page-active").height();
+		var pageW = $(".ui-page-active").width();
+		var maxHeight = parseInt(pageH - 2*(pageH/10));
+		var maxWidth = parseInt(pageW - 2*(pageW/10));
+		
+		$popup.css( {"max-height": maxHeight+ "px","width": maxWidth+ "px"});
+		$popup.find( ".scrollable" ).css( {"max-height": $popup.height() - 3*($popup.height()/10)+ "px"});
+	},
+	
+	/* 
+	 * Mise à jour des params url dans les liens
+	 */
+	
+	majUrl : function(){
+		if($('a[data-url]').length){
+			$('a[data-url]').each(function(i, item){
+				
+				$(item).attr('data-url', MyVoda.currentLang + '|'+ $(item).data('url'))
+			});
+		}
+		if($('.link_account').length){
+			$('.link_account a').attr('href', $('.link_account a').attr('href') + "?s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'] +"&page=" + $('.link_account a').data('url') + "&lang=" + MyVoda.currentLang );
+		}
+
+		$(".content-secondary ul a").each(function(i, item){
+			$(item).attr('href', $(item).attr('href') + "?s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'] +"&page=" + $(item).data('url') + "&lang=" + MyVoda.currentLang );
+		});
+	},
+	
+	/*
+	 * 
+	 */
+	
+	pageLoaded : function(page){
+		
+		switch(page){
+			case "pin":
+				$('#tempopin').html(MyVoda.msgPin);
+				$('#num').val(MyVoda.urlVars['num']);
+			break;
+			
+			case "summary":
+				$.myModaLoad({
+					"doaction"	: "FetchInfo",
+					"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
+				});
+				var num = MyVoda.urlVars['n'];
+				var action = "GetBal";
+				
+				$.bundlesBalance({
+					"doaction"	: action,
+					"num"		:num
+				});
+			break;
+			
+			case "account":
+				$.myModaLoad({
+					"doaction"	: "FetchInfo",
+					"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
+				});
+			break;
+			case "shop":
+					if($('.iosSlider').length) {
+						$.loadCatalog();
+					}
+			break;
+		}
+	},
+	
+	/*
+	 * 
+	 */
+	doAction : function(action, datas, datasArray){
+		
+		switch(action){
+			case "ActionChoixLang":
+				var url = datasArray[0]['value']
+				$.mobile.changePage( url , {});
+			break;
+			case "ActionGenerationPin":
+				var url = "pin.html?page=" + "pin&lang=" + MyVoda.currentLang;
+				var action = "SetSession";
+				
+				$.myModaLoad({
+					"url"		: url,
+					"doaction"	: action,
+					"datas"		:datas + "&Doaction=" + action
+				});
+			break;
+			case "ActionLoggin":
+				var url = "summary.html?page=" + "summary&lang=" + MyVoda.currentLang;
+				var action = "SingIn";
+	
+				$.myModaLoad({
+					"url"		: url,
+					"doaction"	: action,
+					"datas"		:datas + "&Doaction=" + action
+				});
+			break;
+			case "ActionReGenerationPin":
+				var action = "SingIn";
+				
+				$.myModaLoad({
+					"doaction"	: action,
+					"resendPin"	: true,
+					"datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true
+				});
+			break;
+		}
+	}
+	
 }
-$( window ).on( "orientationchange", function( event ) {
-	//alert( "This device is in " + event.orientation + " mode!" );
-	/*if(event.orientation =="landscape"){
-		$("#orientaion").attr('href',"css/lanscape.css");
-	}else{
-		$("#orientaion").attr('href',"css/portrait.css");
-	}*/
-	
-	contentfixe();
-});
 
-$(window).resize( function(){
 
-});
-$(document).on('pageinit',function(e){
-		//$(window).resize();
-});
-$(document).on('pagebeforechange',function(e){
-	$('.ui-loader').hide();
+document.addEventListener("deviceready", MyVoda.onDeviceReady, false);
+$(document).ready(function(){
+	MyVoda.onDeviceReady();
 });
 
 $(document).on('pageshow',function(){
 
-	$.urlVars = $.getVarsFromUrl();
-	$.lang = $.urlVars['lang'];
-	$.page = $.urlVars['page'];
-
+	//initialisation
+	MyVoda.urlVars = $.getVarsFromUrl();
+	MyVoda.currentLang = MyVoda.urlVars['lang'];
+	MyVoda.currentPage = MyVoda.urlVars['page'];
 	
-	/*
-	 * Chargement de la première page apres 5 secondes
-	 */
-	if($(".ui-page-active .home").length){
-		//var h = $(".home").parent().css("max-height");
-		//$('.home').css({"min-height": h});
-		//alert(navigator.userAgent)
-		//Mozilla/5.0 (Linux; U; Android 4.0.4; fr-fr; GT-P5100 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
-	   /* var height = $(window).height();
-    	$('.home').height(height)
-		var timeout = setTimeout(function(){
-			$.mobile.changePage( "accueil.html", { transition: "pop"} );
-			clearTimeout(timeout);
-		}, 10000); */
-	}
-	if($(".ui-page-active.index").length){
-		//$('.index ').css({"display": "table"});
-		//$('.index div[data-role="content"]').css({"display": "table-cell","vertical-align":"middle"});
-	    //var height = $(window).height();
-	    //var heightIndex = $('.index .content').height();
-		//$('.index .content').css({"margin-top": parseInt(height-heightIndex)/2});
-	}
-	//contentfixe();
-	/*
-	 *  Boutton de choix de langue
-	 */
-
-	$('.langues .entrer').bind('click', function() { 
-			var values = $(this).parents("form").serializeArray();
-			var url = values[0]['value']
-			$.mobile.changePage( url , {}); 
-			return false;
-	});
+	MyVoda.majUrl();
 	
-	/*
-	 * verification si la condition d'utilisation est checké avant de continuer
-	 */
-	$('#checkbox-mini-0').click(function(){
-		if ( $(this).is(':checked')){
-			$.condIsCheck=true;
-		}
+	MyVoda.pageLoaded(MyVoda.currentPage);
+	
+	// Envoie du formualire
+	$('.submit').on('click',function(){
 		
-		var timeout = setTimeout(function(){
-			parent.history.back();
-			clearTimeout(timeout);
-		}, 1000);
+		//Récupéraction de l'object form et de l'action
+		var action 		= $(this).attr('id');
+		var $form 		= $(this).parents("form");
+		var datas 		= $form.serialize();
+		var datasArray 	= $form.serializeArray();
+		
+		//Traitement selon les actions
+		MyVoda.doAction(action, datas, datasArray);
+		
+		return false;
 	});
+	
 	/*
 	 * Activation du popup
 	 */
 	$( "#popupCondition" ).on({
+		popupbeforeposition: function() { MyVoda.fixePopup($(this));}
+	});
+	/*
+	 * verification si la condition d'utilisation est checké avant de continuer
+	 */
+	$('#checkbox-0').click(function(){
+		if ( $(this).is(':checked')){
+			MyVoda.condIsCheck=true;
+		}else
+			MyVoda.condIsCheck=false;
 		
-		popupbeforeposition: function() {
-			var pageH = $(".ui-page-active").height();
-			var pageW = $(".ui-page-active").width();
-			var maxHeight = parseInt(pageH - 2*(pageH/10));
-			var maxWidth = parseInt(pageW - 2*(pageW/10));
-			
-			$( "#popupCondition" ).css( {"max-height": maxHeight+ "px",
-											//"height": maxHeight,
-											"width": maxWidth+ "px",
-											//"position": "absolute",
-											});
-			
-			$( "#popupCondition .scrollable" ).css( {"max-height": $( "#popupCondition").height() - 3*($( "#popupCondition").height()/10)+ "px"});
-		}
+		var timeout = setTimeout(function(){
+			parent.history.back();
+			clearTimeout(timeout);
+		}, 500);
 	});
 	
-	
-	/*
-	 * Ajout de complement de l'url sur chaque lien
-	 */
-	var nextPage = "";
-	if($('a[data-url]').length){
-		$('a[data-url]').each(function(i, item){
-			
-			$(item).attr('data-url', $.lang + '|'+ $(item).data('url'))
-		});
-	}
-	if($('.link_account').length){
-		$('.link_account a').attr('href', $('.link_account a').attr('href') + "?s=" + $.urlVars['s'] + "&n=" + $.urlVars['n'] +"&page=" + $('.link_account a').data('url') + "&lang=" + $.lang);
-	}
-
-	$(".content-secondary ul a").each(function(i, item){
-		$(item).attr('href', $(item).attr('href') + "?s=" + $.urlVars['s'] + "&n=" + $.urlVars['n'] +"&page=" + $(item).data('url') + "&lang=" + $.lang);
-	});
-	
-	/*
-	 * Boutton deconnexion
-	 */
-	$('.deconnexion').attr("data-num",$.urlVars['n'])
-	
-	
-	switch($.page){
-	 
-		case "pin":
-			$('#tempopin').text($.affiPin);
-			$('#num').val($.urlVars['num']);
-		break;
-			case "summary":
-	
-			$.fleoLoad({
-				"Doaction"	: "FetchInfo",
-				"Datas"		:"s=" + $.urlVars['s'] + "&n=" + $.urlVars['n']
-			});
-			var num = $.urlVars['n'];
-			var action = "GetBal";
-			
-			$.bundlesBalance({
-				"Doaction"	: action,
-				"num"		:num
-			});
-		break;
-			case "account":
-	
-			$.fleoLoad({
-				"Doaction"	: "FetchInfo",
-				"Datas"		:"s=" + $.urlVars['s'] + "&n=" + $.urlVars['n']
-			});
-		break;
-			case "shop":
-
-				if($('.iosSlider').length) {
-					$.loaded();
-				}
-			
-		break;
-	}
 	$('a[data-url]').click(function(){
-		
-		nextPage = $(this).attr('href') + "?page=" + $(this).data('url') + "&lang=" + $.lang;
-		
+		var nextPage = $(this).attr('href') + "?page=" + $(this).data('url') + "&lang=" + MyVoda.currentLang;
 		var id = $(this).attr('id');
 		
 		switch(id){
-		 
 	 		case "start":
 	 			//On contrôle que la condition est bien validée
-	 			if ($.condIsCheck){
+	 			if (MyVoda.condIsCheck){
 	 				$.mobile.changePage( nextPage , {});
 	 				return false;
 	 			}
 	 			else{
-	 				var err = $.msg.Erreur[$.lang].Condition;
-	 				$.showAlert(err);
-		        	$.vibrate();
+	 				var err = MyVoda.msg.Erreur[MyVoda.currentLang].Condition;
+	 				Notification.alertDialog(err);
+	 				Notification.vibrate(0.5);
 	 				return false;
 	 			}
 			break;
 		 
-	 		case "touch":
+	 		default :
  				$.mobile.changePage( nextPage , {});
  				return false;
 			break;
-		 
-	 		case "send":
- 				$.mobile.changePage( nextPage , {});
- 				return false;
-			break;
-		
 		}
-	});
-	
-	
-	$('#send').click(function(){
-		
-		var datas = formSerialize($(this));
-		var url = "pin.html?page=" + "pin&lang=" + $.lang;
-		var action = "SetSession";
-		
-		$.fleoLoad({
-			"Url"		: url,
-			"Doaction"	: action,
-			"Datas"		:datas + "&Doaction=" + action
-		});
-	});
-	
-	$('#signin').click(function(){
-		
-		var datas = formSerialize($(this));
-		var url = "summary.html?page=" + "summary&lang=" + $.lang;
-		var action = "SingIn";
-		
-		$.fleoLoad({
-			"Url"		: url,
-			"Doaction"	: action,
-			"Datas"		:datas + "&Doaction=" + action
-		});
-	});
-	
-	$('#resend').click(function(){
-		
-		var datas = formSerialize($(this));
-		var action = "SingIn";
-		
-		$.fleoLoad({
-			"Doaction"	: action,
-			"ResendPin"	: true,
-			"Datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true
-		});
-	});
-	
-	$('#EditCompte').click(function(){
-		
-		var datas = formSerialize($(this));
-		var action = "EditCompte";
-		
-		$.fleoLoad({
-			"Url" : "summary.html",
-			"ParamsUrl" : "?page=" + "summary&lang=" + $.lang + "&s=" + $.urlVars['s'] + "&n=" + $.urlVars['n'],
-			"Doaction"	: action,
-			"Datas"		:datas + "&Doaction=" + action + "&s=" + $.urlVars['s']
-		});
 		return false;
 	});
+});
 
-	$('.deconnexion').click(function(){
-		var action = "Logout";
-		var url = "../index.html";
-		
-		$.fleoLoad({
-			"Url"		: url,
-			"Doaction"	: action,
-			"Datas"		: "num=" + $(this).data('num') + "&Doaction=" + action
-		});
-	});
-	
-	/*
-	 * Afficher les offres par nom, prix ou marque
-	 */
-	$(".navbar a").click(function(){
 
-		$.params.SortBy 	= $(this).data('sortby');
-		$.params.Order 		= $(this).attr("data-order");
-		$.params.Limit		= $.Limit;
-		$.scrollbarNumber = 0;
-		$.iossliderStart=false;
-		$('.selectorsBlock .selectors, .slider').empty();
-		$('.iosSlider').iosSlider('destroy');
 
-		$.loaded({
-			"Limit"		: $.params.Limit,
-			"Sort"		: $.params.SortBy,
-			"Order"		: $.params.Order
-		})
-		//$('.iosSlider').iosSlider('goToSlide', 1);
-		
-		if($.Order == "true"){
-			$(this).attr("data-order","false");
-		}else{
-			$(this).attr("data-order","true");
-		}
-		
-	});
-	
-	
-	function formSerialize(elt){
-		var form 	= elt.parents('form');
-		return  form.serialize();
-	}
-});	 
+

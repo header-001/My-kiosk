@@ -22,14 +22,10 @@
 		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
 	<body id="body">
-	    <div data-role="page" id="page" class="index">
+	    <div data-role="page" id="accueil">
 	    	<div data-role="content" class="content">
 	    		<h1><strong>voda</strong>com</h1>
-	    		<h2 class="ui-btn-corner-all">
-	    			<span class="ui-btn-inner">
-	    				<span class="ui-btn-text">kiosque self-service</span>
-	    			</span>
-	    		</h2>
+	    		<h2 class="ui-btn-corner-all">My Vodacom</h2>
 	    		<ul>
 					<li>Résumé de mon compte</li>
 					<li>Gérer mes services</li>
@@ -39,13 +35,14 @@
 	    		</ul>
 	    		<p>
 	    			Veuiller accepter <a href="#popupCondition" data-rel="popup"  data-position-to="window" data-transition="pop">les conditions d'utilisation</a> pour  
-	    			<a data-url="access" href="access.html" id="start" data-role="button" data-inline="true"  class="force-reload">continuer</a>
+	    			<a data-url="access" href="access.html" id="start" data-role="button" data-inline="true">continuer</a>
 	    		</p>
 	  		</div>
-		    <div id="popupCondition" data-role="popup" class="ui-content" data-position-to="window">
-				<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-		    	<strong>Condition d 'utilisation</strong>
-		    	<div class="condition">
+		    <div id="popupCondition" data-role="popup" class="ui-content">
+		    	<div data-role="header">
+			    	<h2>Condition d 'utilisation</h2>
+			   </div>
+		    	<div class="content">
 		    		<div class="scrollable ui-mobile-viewport">
 			    		FR :Cumque pertinacius ut legum gnarus accusatorem flagitaret atque sollemnia, 
 												doctus id Caesar libertatemque superbiam ratus tamquam obtrectatorem audacem excarnificari praecepit, qui ita evisceratus ut cruciatibus 
@@ -57,10 +54,18 @@
 		    		</div>
 		    	</div>
 		    	<form>
-					<input name="checkbox-mini-0" id="checkbox-mini-0" class="custom" data-mini="true" type="checkbox">
-					<label for="checkbox-mini-0" data-inline="true">j'accepte</label>
+					<input name="checkbox-0" id="checkbox-0" class="custom" data-mini="true" type="checkbox">
+					<label for="checkbox-0" data-inline="true">j'accepte</label>
 				</form>
 		    </div>
 	    </div>
+		    <div id="popupConditio" data-role="page" class="ui-content">
+		    <div data-role="header">
+			    <h2>Dialog</h2>
+			  </div>
+			  <div data-role="content">
+			    <p>I am a dialog</p>
+			  </div>
+			 </div>
   </body>
 </html>
