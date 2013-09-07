@@ -2,5 +2,100 @@
 Styles for  10.0'
 ***/
 @media all and (max-width: 800px){
-	
+	html, #body, #accueil{
+		background-size: cover;
+	}
+	#home {
+	 	height: 1280px;
+	 }
+	#accueil .content[data-role="content"]{
+		margin-top:40%;
+		width:90%;
+	}
+	.ui-page div[data-role="content"] h1{
+		font-size: 3em;
+	}
+	#content .login-form .ui-grid-a .ui-block-a + .ui-block-b .ui-btn-inner {
+		padding: 1em 3em;
+	}
+	#content .login-form .ui-grid-b .ui-block-a, 
+	#content .login-form .ui-grid-b .ui-block-b, 
+	#content .login-form .ui-grid-b .ui-block-c{
+		width: auto;
+		width: 99%;
+		float: none !important;
+		margin: .5em auto;
+	}
+	#content .login-form {
+		min-height: 40em;
+	}
+	.ui-grid-a .content-primary{
+		float:none;
+    	width: 100%;
+    	background-color: #fff;
+	}
+	.ui-grid-a .content-secondary{
+		float:none;
+    	width: 100%;
+	}
+	.content-primary .navbar.bottom-menu .ui-btn-inner {
+		font-weight: normal;
+	}
+	.content-primary form{
+		margin: 0 2%;
+	}
+	.account .info.edit-account {
+		width: 100%;
+		margin: 0;
+		border: none;
+	}.ui-responsive .edit-account .field{
+		clear:both;
+		overflow:hidden;
+	}
+	.ui-responsive .edit-account .field > *{
+		float:left;
+	}
+	.ui-responsive .edit-account .field label{
+		width:32%;
+		margin: 1em 0 0 0;
+	}
+	.ui-responsive .edit-account .field div,
+	.ui-responsive .edit-account .field #num {
+		width:63%;
+	}
+	.ui-responsive .edit-account .field #num {
+		margin: 1em 0 0 0;
+	}
+	.ui-responsive .edit-account .field .ui-input-text{
+		font-size:1em;
+	}
+	.summary .info fieldset {
+		width: 90%;
+		margin: 0 auto;
+		padding: 1% 2%;
+	}
+	.summary .content-primary > div {
+		width: 90%;
+		margin: 3% auto 0 auto;
+	}
+	.summary .link_account {
+		padding: 1em 0;
+	}
+	.summary .link_account a{
+		margin-left: 3%;
+	}
+	.shop .contenair{
+		width:95%;
+		margin: 0 auto;
+	}
+	.iosSlider{
+		width: 90%;
+		height: 430px;
+		border-radius: 1em;
+		margin: 0 auto;
+	}
+	.iosSlider .slider .item {
+		width: 729px;
+		height: auto;
+	}
 }

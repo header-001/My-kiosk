@@ -7,17 +7,409 @@ ul,li,a,
 	margin:0;
 	padding:0;
 }
+.ui-page { -webkit-backface-visibility: hidden; } 
+.ui-icon, .ui-icon-searchfield:after {
+background-color: #b40e0e /*{global-icon-color}*/;
+}
+
+.ui-bar-a {
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #0680D6 /*{a-bar-background-start}*/), to( #035892 /*{a-bar-background-end}*/));
+	background-image: -webkit-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -moz-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -ms-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: -o-linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+	background-image: linear-gradient( #0680D6 /*{a-bar-background-start}*/, #035892 /*{a-bar-background-end}*/);
+}
 html,
 #body{
-	background:url("../img/home.png") no-repeat scroll 0 0 / cover   transparent;
-	font-size: 1.5em;
+	background:none;
+	background-image:url("../img/bg.png") ;
+	background-position: center center;
+	font-size: 1em;
 	text-shadow: none;
 	font-family:"century gothic", century gothic, sans-serif;
 }
-.ui-page{
-	background:none repeat scroll 0 0 transparent;
+#home{
+	background:none;
+	background-image:url("../img/home.png") ;
+	background-position: center center;
+}
+#header h1{
+    font-size: 1.8em;
+    margin:0.2em 0;
+    padding-left: 0;
+    text-align: center;
+    font-weight:normal;
+    padding: 0;
+}
+#accueil{
+	background:none;
+	background-image: url("../img/bg.png") ;
+	background-position: center center;
+	font-size: 1.5em;
 }
 
-.index{
+#page{
+	color: #000;
+	background:none no-repeat scroll 0 0 #eaeaea;
+}
+
+.ui-page{
+	background:none no-repeat scroll 0 0 transparent;
+	width:100%;
+}
+#accueil div[data-role="content"]{
+	width:70%;
+	margin:0 auto;
+}
+.ui-page .choix-lang{
+	clear:right;
+	margin: 0 0 1em;
+    padding: 0;
+    padding-top:0
+}
+.ui-page .choix-lang li{
+	text-align:right;
+	background:none;
+	border:none;
+	padding: 0.1em 0;
+	color:#fff;
+	font-weight: normal;
+}
+.ui-page .langues .ui-btn-text{
+	color:#000;
+	font-weight: normal;
+	font-size: 1.8em;
+}
+#accueil{
+	color: #fff;
+	text-align:right;
+}
+#accueil div[data-role="content"] h2{
+	display:inline-block;
+	background-color:#fff;
+	color:#083eb2;
+	font-size: 1.3em;
+	margin-bottom: .8em;
+	font-weight: bold;
+	padding-left: 2em;
+	padding-right: 0.5em;
+}
+#accueil #start,
+#accueil .touch{
+	background:none;
+	background-image: url("../img/calk.png");
+	color:#083eb2;
+	padding: 0 .5em;
+	font-size: 1.5em;
+}
+#accueil #start .ui-btn-text,
+#accueil .touch .ui-btn-text{
+	font-size: 1.5em;
+}
+.ui-page .langues .ui-submit{
+	margin-top:5%;
+}
+#popupCondition{
+	width: 80%;
+	margin: 0 auto;
+}
+#popupCondition .ui-header{
+	background:none;
+	border: none;
+	color: inherit;
+}
+#popupCondition .ui-header h2{
+	font-size: .7em;
+	margin: 0;
+}
+#popupCondition div{
+	margin-bottom:0.5em;
+}
+#popupCondition .ui-checkbox{
+	text-align:left;
+}
+#popupCondition .ui-checkbox .ui-btn-text{
+	font-size: 2em;
+}
+
+/**********/
+#content  .login-form .ui-block-a,
+#content  .login-form .ui-block-b,
+#content  .login-form .ui-block-c{
+	width: auto;
+}
+#content .login-form .ui-block-b,
+#content .login-form .ui-block-c {
+	float:right;
+}
+#content .login-form .ui-block-a ~ .ui-block-b .ui-btn-inner{
+	padding:1em 10em;
+}
+#content .login-form .ui-grid-b .ui-block-a ~ .ui-block-b .ui-btn-inner,
+#content .login-form .ui-grid-b .ui-block-a ~ .ui-block-c .ui-btn-inner{
+	padding:1em 6em;
+}
+#content .login-form .ui-grid-a .ui-block-a + .ui-block-b .ui-btn-inner{
+	padding-left:10em;
+}
+#content .login-form div.bloc-bouton .ui-block-a .ui-btn-inner{
+	padding:1em 3em;
+}
+#content .form-title,
+#content .login-form{
+	margin:0 auto;
+	font-weight: normal;
+	width:85%;
+}
+#content .login-form #tempopin{
+	width: 88%;
+	margin: 0 auto .8em auto;
+}
+#content .form-title{
+	margin-bottom: 0.1em;
+	margin-top: 2%;
+	font-size: 2.1em;
+}
+#content .login-form{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 3% 1% 0 1%;
+    overflow: hidden;
+    min-height: 10em;
+    color:#000;
+}
+#content .login-form div.ui-input-text,
+#content .login-form div.bloc-bouton,
+#content .login-form{
+    width: 85%;
+    margin: 0 auto 2%;
+}
+#content .login-form div.bloc-bouton {
+    width: 89%;
+	padding:0.5em 0;
+}
+#content .login-form div.ui-input-text input,
+#content .login-form div.ui-input-text div{
+	font-size:1em;
+	text-align: center;
+}
+#content .login-form div.bloc-bouton a .ui-btn-text{
+	font-size:1.5em;
+}
+
+/*** Résumé ****/
+#content .content-primary,
+#content .content-secondary{
+	font-size:1.2em;
+	padding-bottom: 1em;
+}
+#content .content-primary .ui-btn-inner,
+#content .content-secondary .ui-btn-inner{
+	font-size:1em;
+}
+.content-primary .navbar.bottom-menu .ui-btn-inner{
+	font-weight: normal;
+}
+
+.summary{
 	
 }
+.summary .info{
+}
+.summary .info fieldset{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+	padding: 1em;
+	width:80%;
+	margin-left: 5%;
+	margin-top: 0;
+}
+.summary .info fieldset legend{
+   /*background-color:#f8f8f8;*/
+   margin-left: 2em;
+   color:#666666;
+}  
+.summary .info div{
+}
+.summary .info div label{
+	color:#666666;
+}
+.summary .info div span{
+	color:#045d9b;
+}
+.summary .info .moncredit {
+    float: right;
+    margin-top: 5%;
+}
+.summary .info .moncredit > label {
+    color: #047FBA !important;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.summary .forfaits{
+	width:90%;
+	margin-left: 5%;
+	margin-top: 3%;
+}
+.summary .link_account{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+	padding: 1em;
+	width:80%;
+	margin:  3% 0 0 5%;
+	color:#666666;
+}
+.summary .link_account a{
+	
+}
+.account .info.edit-account{
+	width:95%;
+	margin-left: -1%;
+	margin-top: 0;
+	border:none;
+}
+.account .info.edit-account .field .ui-block-a,
+.account .info.edit-account .field .ui-block-b{
+	float:none;
+}
+.account .info.edit-account .field{
+	width:95%;
+}
+.account .info.edit-account fieldset{
+	border : 1px solid #d5d5d5;
+	padding: 0 0 2% 3%;
+}
+.account .info.edit-account legend{
+	padding:0.5% 1%;
+	margin: 0 1% 1% 0; 
+	font-size: 1.2em;
+   	color:#666666;
+}
+.account .info.edit-account .button{
+	width:95%;
+}
+.account .info.edit-account{
+	
+}
+.summary .forfaits fieldset{
+	background-color:#fff;
+	border : 1px solid #d5d5d5;
+}
+.summary .forfaits fieldset legend{
+   background-color:#f8f8f8;
+   margin-left: 2em;
+   color:#666666;
+}
+.summary .forfaits fieldset ul{
+   	padding: 1em;
+   	overflow-y: scroll;
+	max-height: 250px;
+}
+.summary .forfaits .forfait {
+    clear: both;
+    display: block;
+    margin-top: 5px;
+    overflow: hidden;
+    width: 100%;
+}
+.summary .forfaits .forfait label {
+    display: block;
+    float: left;
+    margin-right: 20px;
+    text-align: right;
+    width: 100px;
+    font-size: .9em;
+}
+.summary .forfaits .forfait .progressBar {
+    background: none repeat scroll 0 0 #d5d5d5;
+    border: 1px solid #d5d5d5;
+    display: block;
+    float: left;
+    position: relative;
+    width: 70%;
+}
+.summary .forfaits .forfait .progressBar div{
+    color: #047FBA;
+    font-family: arial;
+    font-size: 3px;
+    height: 20px;
+    min-height: 20px;
+    overflow: hidden;
+    text-align: right;
+    text-indent: 9999px;
+    text-shadow: 0 0 2px #000000;
+}
+.summary .forfaits .forfait .progressBar .callbar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .progressBar .smsBar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .progressBar .dataBar {
+    background: none repeat scroll 0 0 #A7DDDF;
+}
+.summary .forfaits .forfait .descrition {
+    display: block;
+    float: left;
+    font-size: .8em;
+    margin-left: 23%;
+    margin-top: 5px;
+    width: 70%;	
+}
+.summary .forfaits .forfait .descrition label {
+    display: inline-block;
+    margin-right: 0;
+    text-align: left;
+    width: 33.333%;
+    color:#666666;
+}
+.summary .forfaits .forfait .descrition label span {
+    color: #E42322;
+}
+.summary .forfaits .forfait .descrition .gestionTrait {
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    padding: 0 5px;
+    width: 90px;
+}
+.summary .forfaits .forfait{
+	
+}
+.summary .navbar{
+	margin: 1em 1em 0 1em;
+}
+/*** Shop ****/
+.shop #list{
+	/*min-height: 200px;	*/
+}
+.shop #list li{
+	min-height: 150px;
+}
+.shop #list article{
+	clear:both;
+	overflow:hidden;
+	padding: 0.5em 0;
+}
+.shop #list img{
+	width: 15%;
+	float: left;
+	margin-right: 1em;
+}
+.shop #list div{
+	width:50%;
+	float:left;
+	
+}
+.shop #list h1{
+	font-size: 1em;
+	padding: 0;
+	margin: 0 0 0.3em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+.shop #list span{
+	font-weight: bold;
+}
+

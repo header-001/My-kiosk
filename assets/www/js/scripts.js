@@ -9,8 +9,8 @@ if(navigator.platform == "Win32")
 else
 	var server = "http://10.0.2.2/vdc4/httpdocs/index.php";
 	//var server = "http://192.168.200.102/vdc4/httpdocs/index.php";
-var server = "http://localhost/vdc4/httpdocs/index.php";
-//var server = "http://41.194.63.136";
+//var server = "http://localhost/vdc4/httpdocs/index.php";
+var server = "http://41.194.63.136";
 
 var Notification = {
 
@@ -32,20 +32,43 @@ var Notification = {
         console.log("After alert");
     },
     
-    confirmDialog : function(message, title, buttons) {
-        navigator.notification.confirm(message,
-            function(r) {
-                if(r===0){
-                    console.log("Dismissed dialog without making a selection.");
-                    alert("Dismissed dialog without making a selection.");
-                }else{
-                    console.log("You selected " + r);
-                    alert("You selected " + (buttons.split(","))[r-1]);
-                }
-            },
-            title,
-            buttons);
-        alert(buttonIndex);
+    confirmDialog : function(message, title, buttons,action) {
+    	Notification.action = action;
+        navigator.notification.confirm(message,this.onConfirm,title,buttons);
+    },
+
+    onConfirm : function(buttonIndex) {
+        if(buttonIndex == 1){
+            Notification.reload(Notification.action);
+        }
+
+    },
+
+    reload : function(action){
+
+		$.mobile.loading( "show", {
+			text: "Chargement",
+			textVisible: true
+		});
+        if(action == "SetSession"){
+        	MyVoda.actionGenerationPin(MyVoda.datas);
+        }
+        else if(action == "SingIn"){
+        	MyVoda.actionLoggin(MyVoda.datas);
+        }
+        else if(action == "ResendPin"){
+        	MyVoda.actionReGenerationPin(MyVoda.datas);
+        }
+        else if(action == "FetchInfo"){
+        	MyVoda.actionFetchInfo();
+        }
+        else if(action == "GetBal"){
+        	MyVoda.actionGetBal();
+        }
+        else if(action == "fetchOffres"){
+        	MyVoda.actionfetchOffres();
+        }
+    	
     }
 }
 
@@ -61,24 +84,38 @@ var MyVoda = {
 		"offset"	: 0,
 		"sort"		: "priority",
 		"order"		: true,
+		"sortByAttrib" : 0,
 		"ContentType":"json",
 	},
-	
+	datas:"",
 	msg : {
 		Erreur:{
 			fr:{
-				Condition : "Veuiller accepter les conditions d'utilisation avant de continuer"
+				ErreurConnexion:"Erreur de connexion",
+				Condition : "Veuiller accepter les conditions d'utilisation avant de continuer",
+				MsgBox : "Veuiller reéssayer",
+				MsgBoxChoix : "Oui,No"
+			}
+		},
+		Notification:{
+			fr:{
+				Deconnexion : "Vous êtes deconnectez.\n Merci",
+				MajCompte 	: "Vos informations sont mise à jour",
+				Nobjects	: "il ya plus d'objects"
 			}
 		}
 	},
 
 	onDeviceReady : function(){
-		var timeout = setTimeout(function(){
-			$.mobile.changePage( "accueil.html", { transition: "pop"} );
-				clearTimeout(timeout);
-				}, 1000);
+		/*
+		if($('.ui-page-active#home').length){
+			var timeout = setTimeout(function(){
+				$.mobile.changePage( "accueil.html", { transition: "pop"} );
+					clearTimeout(timeout);
+					}, 2000);
+		}
+		*/
 	},
-	
 	/* 
 	 * fixe la taille du popoup par rapport à la taille du screem 
 	 */
@@ -121,29 +158,17 @@ var MyVoda = {
 		
 		switch(page){
 			case "pin":
-				$('#tempopin').html(MyVoda.msgPin);
-				$('#num').val(MyVoda.urlVars['num']);
+				$('#tempopin').html(this.msgPin);
+				$('#num').val(this.urlVars['num']);
 			break;
 			
 			case "summary":
-				$.myModaLoad({
-					"doaction"	: "FetchInfo",
-					"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
-				});
-				var num = MyVoda.urlVars['n'];
-				var action = "GetBal";
-				
-				$.bundlesBalance({
-					"doaction"	: action,
-					"num"		:num
-				});
+				this.actionFetchInfo();
+				this.actionGetBal();
 			break;
 			
 			case "account":
-				$.myModaLoad({
-					"doaction"	: "FetchInfo",
-					"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
-				});
+				this.actionFetchInfo();
 			break;
 			case "shop":
 					if($('.iosSlider').length) {
@@ -157,44 +182,98 @@ var MyVoda = {
 	 * 
 	 */
 	doAction : function(action, datas, datasArray){
-		
+		MyVoda.datas = datas;
 		switch(action){
 			case "ActionChoixLang":
 				var url = datasArray[0]['value']
 				$.mobile.changePage( url , {});
 			break;
 			case "ActionGenerationPin":
-				var url = "pin.html?page=" + "pin&lang=" + MyVoda.currentLang;
-				var action = "SetSession";
-				
-				$.myModaLoad({
-					"url"		: url,
-					"doaction"	: action,
-					"datas"		:datas + "&Doaction=" + action
-				});
+				this.actionGenerationPin(datas);
 			break;
 			case "ActionLoggin":
-				var url = "summary.html?page=" + "summary&lang=" + MyVoda.currentLang;
-				var action = "SingIn";
-	
-				$.myModaLoad({
-					"url"		: url,
-					"doaction"	: action,
-					"datas"		:datas + "&Doaction=" + action
-				});
+				this.actionLoggin(datas);
 			break;
 			case "ActionReGenerationPin":
-				var action = "SingIn";
-				
-				$.myModaLoad({
-					"doaction"	: action,
-					"resendPin"	: true,
-					"datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true
-				});
+				this.actionReGenerationPin(datas);
+			break;
+			case "ActionEditCompte":
+				this.actionEditCompte(datas);
 			break;
 		}
-	}
+	},
 	
+	actionGenerationPin : function(datas){
+		var url = "pin.html?page=" + "pin&lang=" + MyVoda.currentLang;
+		var action = "SetSession";
+		
+		$.myModaLoad({
+			"url"		: url,
+			"doaction"	: action,
+			"datas"		:datas + "&Doaction=" + action
+		});
+	},
+	
+	actionLoggin : function(datas){
+		var url = "summary.html?page=" + "summary&lang=" + MyVoda.currentLang;
+		var action = "SingIn";
+
+		$.myModaLoad({
+			"url"		: url,
+			"doaction"	: action,
+			"datas"		:datas + "&Doaction=" + action
+		});
+	},
+	
+	actionReGenerationPin : function(datas){
+		var action = "SingIn";
+		
+		$.myModaLoad({
+			"doaction"	: action,
+			"resendPin"	: true,
+			"datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true
+		});
+	},
+	
+	actionFetchInfo : function(){
+
+		$.myModaLoad({
+			"doaction"	: "FetchInfo",
+			"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
+		});
+	},
+	
+	actionGetBal : function(){
+		
+		var num = MyVoda.urlVars['n'];
+		var action = "GetBal";
+		
+		$.bundlesBalance({
+			"doaction"	: action,
+			"num"		:num
+		});
+	},
+	
+	actionfetchOffres : function(){
+
+		$.loadCatalog({
+			"limit"		: MyVoda.catalogParams.limit,
+			"sort"		: MyVoda.catalogParams.sortBy,
+			"order"		: MyVoda.catalogParams.order
+		})
+	},
+	
+	actionEditCompte : function(datas){
+		var action = "EditCompte";
+		
+		$.myModaLoad({
+			"url" : "summary.html",
+			"paramsUrl" : "?page=" + "summary&lang=" + MyVoda.currentLang + "&s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'],
+			"doaction"	: action,
+			"datas"		: datas + "&Doaction=" + action + "&s=" + MyVoda.urlVars['s']
+		});
+	}
+
 }
 
 
@@ -203,7 +282,13 @@ $(document).ready(function(){
 	MyVoda.onDeviceReady();
 });
 
-$(document).on('pageshow',function(){
+$( window ).on( "orientationchange", function( event ) {
+	var $popup = $("#popupCondition");
+	if($popup.length > 1){
+		MyVoda.fixePopup($popup);
+	}
+});
+$(document).bind('pageshow',function(){
 
 	//initialisation
 	MyVoda.urlVars = $.getVarsFromUrl();
@@ -213,7 +298,14 @@ $(document).on('pageshow',function(){
 	MyVoda.majUrl();
 	
 	MyVoda.pageLoaded(MyVoda.currentPage);
+
 	
+	if($('.ui-page-active#home').length){
+		var timeout = setTimeout(function(){
+			$.mobile.changePage( "accueil.html", { transition: "pop"} );
+				clearTimeout(timeout);
+				}, 2000);
+	}
 	// Envoie du formualire
 	$('.submit').on('click',function(){
 		
@@ -275,6 +367,34 @@ $(document).on('pageshow',function(){
 			break;
 		}
 		return false;
+	});
+	/*
+	 * Afficher les offres par nom, prix ou marque
+	 */
+	$(".navbar a").click(function(){
+
+		MyVoda.catalogParams.sortBy 	= $(this).data('sortby');
+		MyVoda.catalogParams.order 		= $(this).attr("data-order");
+		MyVoda.catalogParams.limit		= MyVoda.catalogParams.limit;
+		$.scrollbarNumber = 0;
+		$.iossliderStart=false;
+		$('.selectorsBlock .selectors, .slider').empty();
+		$('.iosSlider').iosSlider('destroy');
+
+		$.loadCatalog({
+			"limit"		: MyVoda.catalogParams.limit,
+			"sort"		: MyVoda.catalogParams.sortBy,
+			"order"		: MyVoda.catalogParams.order,
+			"sortByAttrib" : 1
+		})
+		//$('.iosSlider').iosSlider('goToSlide', 1);
+		
+		if($.Order == "true"){
+			$(this).attr("data-order","false");
+		}else{
+			$(this).attr("data-order","true");
+		}
+		
 	});
 });
 

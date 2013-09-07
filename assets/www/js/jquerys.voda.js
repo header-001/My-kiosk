@@ -44,7 +44,7 @@
 	
 	$.bundlesBalance = function(options){
 		var defauts={
-			"Doaction"	: "",
+			"doaction"	: "bundlesBalance",
 			"num"		:""
 		};
 		var params=$.extend(defauts, options);
@@ -61,14 +61,16 @@
 			"offset"	: MyVoda.catalogParams.offset,
 			"sort"		: MyVoda.catalogParams.sort,
 			"order"		: MyVoda.catalogParams.order,
+			"sortByAttrib"	: 0,
 			"contentType":"json",
+			"doaction":"fetchOffres",
 	     };
 		
 		var parametres=$.extend(defauts, options);
 		
-		var url =  server + "/" + MyVoda.currentLang + "/ezjscore/call/vodashop::fetchProductItems::" + 
+		var url =  server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::fetchOffres::" + 
 					parametres.limit + "::" + parametres.offset + "::" + parametres.sort + "::" + 
-					parametres.order + "::?ContentType=" + parametres.contentType + "&image_alias=line_offre";
+					parametres.order + "::"+parametres.sortByAttrib+"::?ContentType=" + parametres.contentType + "&image_alias=line_offre";
 		
 		console.log(url);
 		
@@ -92,56 +94,141 @@
 		    	 onSuccessFunction(result,params);
 		     },
 		     error: function(){
-		    	 onSuccessFunction(params);
+		    	 onErrorFunction(params);
 		     },
 		     beforeSend: function(){
-	        	  $('.ui-loader').show();
+		    		$.mobile.loading( "show", {
+		    			text: "Chargement",
+		    			textVisible: true
+		    			});
 		     },
 		     complete: function(){
-		    	 onCompleteFunction(params);
+		    		 onCompleteFunction(params);
 		     }
 		 });
 	};
 
+	var TotalItem = "";
+	$.iossliderStart=false;
+	
 	queryCatalog = function(url,parametres){
 		$.ajax({
 			type: "POST",
 			dataType: "json",
 			url : url,
 	     	success:  function (data) {
-	     		$.offset = data.content.offset;
-	     		$.Limit = data.content.limit;
+	     		MyVoda.catalogParams.offset = data.content.offset;
+	     		MyVoda.catalogParams.limit = data.content.limit;
+	     		MyVoda.catalogParams.sortByAttrib = data.content.sortByAttrib
 	     		TotalItem = data.content.total_count;
-	     		
-	     		$.each(data.content.list ,function(i, item){
-		     		
-		     		var img = "<img src=' " + item.visuel + "' alt='" + item.name + "'/>";
-		     		var title = "<h1 class='title'>" + item.name +"</h1>";
-		     		var prix = "<span class='prix'> " + item.prix +"$</span>";
-		     		$(".slider").append("<div class = 'item'>" + img + title + prix + "</div>");
-	     		});
-	     		
-	     		if(!$.iossliderStart){
-		     		var method = "start";
-	     			$.iossliderStart=true;
-	     			slideInit(TotalItem);
+	     		if(data.content.count == 0){
+		 			//var msg = MyVoda.msg.Notification[MyVoda.currentLang].Nobjects;
+	 				//Notification.alertDialog(msg);
+		      		$.mobile.loading( "hide");
 	     		}else{
-	     			var method = "update";
+		     		$.each(data.content.list ,function(i, item){
+		     			var prix = "";
+			     		var img = "<img src='" + item.visuel + "' alt='" + item.name + "'/>";
+			     		var title = "<h1 class='title'>" + item.name +"</h1>";
+			     		if(parseInt(item.prix)>0)
+			     			prix = "<span class='prix'> " + item.prix +"$</span>";
+	
+			     			
+			     		$(".slider").append("<div class = 'item'>" + img + title + prix + "</div>");
+		     		});
+		     		
+		     		if(!$.iossliderStart){
+			     		var method = "start";
+		     			$.iossliderStart=true;
+		     			slideInit(TotalItem);
+		     		}else{
+		     			var method = "update";
+		     		}
+		     		
+		     		$.iosSliderCall(method);
 	     		}
-	     		
-	     		$.iosSliderCall(method);
 	     	},
 	        error: function () {
 	       	  
 	     	}, 
 	     	beforeSend: function(){
-	     		$('.ui-loader').show();
+	    		$.mobile.loading( "show", {
+	    			text: "Chargement",
+	    			textVisible: true
+	    			});
 	     	},
 	     	complete: function(){
-	     		$('.ui-loader').hide();
+	      		$.mobile.loading( "hide");
 	     	}
 	    });
 	};
+
+	$.iosSliderCall = function(method){
+
+		if(method =="update"){
+			$('.iosSlider').iosSlider('update');
+		}
+		else{
+			$('.iosSlider').iosSlider({
+				snapToChildren: true,
+				desktopClickDrag: true,
+				keyboardControls: true,
+				scrollbar: true,
+				scrollbarHide:false,
+				scrollbarDrag: true,
+				scrollbarLocation: 'bottom',
+				scrollbarMargin: '5px 20px 5px 20px',
+				scrollbarBorderRadius: 0,
+				scrollbarHeight: '2px',
+				navPrevSelector: $('.prevButton'),
+				navNextSelector: $('.nextButton'),
+				navSlideSelector: $('.selectors .item'),
+				onSlideChange: slideChange,
+				onSliderLoaded: slideLoaded,
+				onSliderUpdate: sliderUpdate
+			});
+		}
+	};
+
+	function slideLoaded(args){
+		$(".count_article").html(TotalItem + " offres")
+		for(var i = 0; i < args.data.numberOfSlides; i++) {
+			var item = $('.selectors').children('.item')[i];
+			$(item).addClass('active');
+		}
+	}
+	function sliderUpdate(args){
+		$('.selectors .item').removeClass('selected');
+		$('.selectors .item:eq(' + (args.currentSlideNumber - 1) + ')').addClass('selected');
+		
+		for(var i = 0; i < args.data.numberOfSlides; i++) {
+			var item = $('.selectors').children('.item')[i];
+			$(item).addClass('active');
+		}
+	}
+	function slideChange(args) {
+		
+		$('.selectors .item').removeClass('selected');
+		$('.selectors .item:eq(' + (args.currentSlideNumber - 1) + ')').addClass('selected');
+		
+		currentSlideNumber = args.currentSlideNumber
+		numberOfSlides = args.data.numberOfSlides
+		if(currentSlideNumber == numberOfSlides){
+			$.loadCatalog({
+				"limit"		: MyVoda.catalogParams.limit,
+				"sort"		: MyVoda.catalogParams.sortBy,
+				"order"		: MyVoda.catalogParams.order,
+				"offset"	: parseInt(parseInt(MyVoda.catalogParams.limit) + parseInt(MyVoda.catalogParams.offset)),
+	     		"sortByAttrib" : MyVoda.catalogParams.sortByAttrib
+			})
+		}
+	}
+	function slideInit(totalItem){
+		for(var i = 1; i <= totalItem; i++) {
+			$('.selectors').append("<div class='item'></div>");
+		}
+		$('.selectors .item:first-child').addClass('first selected');
+	}
 	
 	onSuccessFunction= function(result,params){
 		
@@ -182,24 +269,24 @@
 		 	break;
 		 	
 		 	case "Logout":
-		 		if(data.content.result || result.error){
-		        	$('.ui-loader').hide();
+		 		if(result.content.error || result.error){
+		 	  		$.mobile.loading( "hide");
 		        	$.showAlert(result.content.msg);
-		        	vibrate();
+		        	Notification.vibrate(0.5);
 		 		}else{
-		 			$('.ui-loader').hide();
-		        	$.showAlert($.msg.Notification[$.lang].Deconnexion);
-		 			$.mobile.changePage( params.Url , {});
+		 	  		$.mobile.loading( "hide");
+		 			Notification.alertDialog(MyVoda.msg.Notification[MyVoda.currentLang].Deconnexion);
+		 			$.mobile.changePage( params.url , {});
 		 		}
 		 	case "EditCompte":
-		 		if(data.content.error || data.error){
-		        	$('.ui-loader').hide();
-		        	$.showAlert(data.content.msg);
-		        	vibrate();
+		 		if(result.content.error || result.error){
+		 	  		$.mobile.loading( "hide");
+		        	Notification.alertDialog(result.content.msg);
+		        	Notification.vibrate(0.5);
 		 		}else{
-		 			$('.ui-loader').hide();
-		        	$.showAlert($.msg.Notification[$.lang].MajCompte);
-		 			$.mobile.changePage( params.Url + params.ParamsUrl , {});
+		 	  		$.mobile.loading( "hide");
+		 			Notification.alertDialog(MyVoda.msg.Notification[MyVoda.currentLang].MajCompte);
+		 			$.mobile.changePage( params.url + params.paramsUrl , {});
 		 		}
 		 		
 			 break;
@@ -207,13 +294,23 @@
 	};
 	
 	onErrorFunction = function(params){
-  	  $.vibrate();
-	  $('.ui-loader').hide();
+		console.log(params);
+		var action = params.doaction
+		var title = MyVoda.msg.Erreur[MyVoda.currentLang].ErreurConnexion;
+		var msgBox = MyVoda.msg.Erreur[MyVoda.currentLang].MsgBox;
+		var msgBoxChoix = MyVoda.msg.Erreur[MyVoda.currentLang].MsgBoxChoix;
+		
+		if(action.resendPin)
+			action = "ResendPin";
+		
+		Notification.confirmDialog(msgBox,title,msgBoxChoix,action);
+		Notification.vibrate(0.5);
+		$.mobile.loading( "hide");
 	};
 	
 	onCompleteFunction= function(params){
-  	  if(params.Doaction !="FetchInfo")
-		  $('.ui-loader').hide();
+  	  if(params.doaction !="FetchInfo")
+  		$.mobile.loading( "hide");
 	};
 	
 	__setDataContent = function(datas){
@@ -226,7 +323,7 @@
 			 $(".edit-account #email").val(datas.compte.email);
 			 $(".edit-account #pwd").val(datas.compte.pwd);
 			 $(".edit-account #confirm_pwd").val(datas.compte.pwd);
-      	  	$('.ui-loader').hide();
+			 $.mobile.loading( "hide");
 		 }else{
 			$(".info .num").html(datas.n);
 			$(".info .nom").html(datas.compte.prenom + " " + datas.compte.nom);

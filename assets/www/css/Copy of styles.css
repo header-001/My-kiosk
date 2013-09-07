@@ -197,7 +197,7 @@ background-color: #b40e0e /*{global-icon-color}*/;
 }
  #content .login-form div.ui-input-text,
  #content .login-form div.bloc-bouton,
-  #content .login-form #{
+  #content .login-form{
     width: 90%;
     margin: 0 auto 2%;
 }

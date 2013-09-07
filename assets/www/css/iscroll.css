@@ -1,6 +1,6 @@
 #wrapper {
 	/*width:300px;*/
-	width:90%;
+	width:100%;
 	/*height:160px;*/
 	
 	position:relative;	/* On older OS versions "position" and "z-index" must be defined, */
@@ -143,8 +143,10 @@
 }
 			
 .iosSlider .slider .item img{
-	width: 30%;
+	/*width: 40%;*/
+	height: 80%;
 	float:left;
+	margin-right:1%;
 }
 
 
@@ -166,7 +168,7 @@
 	position: absolute;
 	bottom: 10px;
 	width: 100%;
-	height: 5%;
+	height: auto;
 }
 
 .iosSlider .selectorsBlock .selectors {

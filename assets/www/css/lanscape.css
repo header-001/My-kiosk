@@ -1,10 +1,81 @@
 /***
 Styles for  10.0'
 ***/
-@media all and (max-width: 1280px){
+/*@media all and (max-width: 1290px){*/
+@media all and (max-width: 1350px){
 	#body{
 		/* fixe la taille par defaut de l'ecran  1280X800 */
-		min-width:1280px;
+		/*min-width:1280px;
+		min-height:800px;*/
+	}
+	.log{
+		font-size: 1.5em;
+	}
+	.ui-mobile .ui-page{
 		min-height:800px;
+	}
+	#accueil div[data-role="content"]{
+		margin-top:7%;
+	}
+	.ui-page div[data-role="content"] h1{
+		font-size: 3.5em;
+	}
+	.ui-grid-a .content-primary{
+		float:right;
+    	width: 73%;
+		min-height: 633px;
+		background-color:#fff;
+	}
+	.ui-grid-a .content-secondary{
+		float:right;
+    	width: 25%;
+    	min-height: 620px;
+    	position: relative;
+	}
+	.content-secondary.ui-block-b > * {
+	    margin-right: 3%;
+	    margin-left: 0;
+	}
+	.content-secondary .ui-li .ui-btn-text a{
+    	white-space: pre-wrap;
+	}
+	.iosSlider {
+		width: 90%;
+		height: 395px;
+		border-radius: 1em;
+		margin: 0 auto;
+	}	
+	.iosSlider .slider .item {
+		width: 929px;
+		height: 380px;
+	}
+	.content-secondary .deconnexion{
+	   	bottom: 0;
+		margin-left: 1em;
+	    margin-right: 1em;
+	    position: absolute;
+	    width: 81%;
+	}
+	.ui-responsive .edit-account .field{
+		clear:both;
+		overflow:hidden;
+	}
+	.ui-responsive .edit-account .field > *{
+		float:left;
+	}
+	.ui-responsive .edit-account .field label{
+		width:32%;
+		margin: 1em 0 0 0;
+	}
+	.ui-responsive .edit-account .field div,
+	.ui-responsive .edit-account .field #num {
+		width:63%;
+	}
+	.ui-responsive .edit-account .field #num {
+		margin: 1em 0 0 0;
+	}
+	.shop .contenair{
+		width:90%;
+		margin: 0 auto;
 	}
 }
