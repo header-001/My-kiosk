@@ -18,52 +18,51 @@
 		
 		<script type="text/javascript" charset="utf-8" src="../js/cordova.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/jquery.iosslider.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/jquerys.voda.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
 	<body id="body" class="page-interieur">
 	    <div data-role="page" id="page">
 	    	<div data-role="header" id="header" data-position="fixed">
-	    		<h1><strong>voda</strong>com</h1>
+	    		<h1 class="form-title"><strong>voda</strong>com</h1>
 	    	</div>
-	    	<div data-role="content" id="content" class="shop ui-grid-a ui-responsive">
-				<div class="content-primary ui-block-a">
-					<div data-role="navbar" class="navbar top-menu">
-						<ul>
-							<li><a href="#" class="" data-sortby="name" data-order="true">Par nom</a></li>
-							<li><a href="#" data-sortby="prix" data-order="true">Par prix</a></li>
-							<!-- li><a href="#" data-sortby="marque" data-order="true">par marque</a></li -->
-						</ul>
-					</div>
-					<div class="contenair">
-						<h2 class="count_article ui-corner-all ui-shadow"></h2>
-				      	<div class = 'iosSlider ui-btn-up-c'>
-							<div class = 'slider'>		
+	    	<div data-role="content" id="content" class="findshop ui-grid-a ui-responsive">
+                <div class="content-primary ui-block-a">
+                	<div class="entete ui-corner-all ui-shadow">
+                		<h2>liste des magasins</h2>
+                		<span>Cliquer ci dessous pour retrouver le shop le plus proche de chez vous:</span>
+                   	</div>
+                    <div data-role="collapsible-set" data-inset="true"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" 	data-corners="true" id="pronvinces" class="ui-corner-all">
+						<!-- div data-role="collapsible" class="pronvince pronvince-0" id="0" >
+							<h3>'+ pronvince.name +'</h3>
+							<div class="collapsible-content" id="collapsible-content-' + pronvince.id +'">
+								<div class="inline">
+									<div class="part-left">
+										<h2>Vodashop SOCIMAT</h2>
+										<p>Boulevard du 30 juin, En face du garage Mitsubishi commune de la Gombe</p>
+										<p>Tel : 8144402668 / 813510763 / 813510764 Fax : 813464164"</p>
+									</div>
+									<div class="part-right">
+										<h2>Heures d'ouverture/fermeture</h2>
+										<div><p><strong>Lundi à Vendredi</strong> : de 08h00 - 17h00</p><p><strong>Samedi</strong> : de 10h00 à 13h00</p></div>
+									</div>
+									<div style="clear:both"></div>
+									<div>
+										<a data-role="button" data-inline="true" data-icon="grid" data-iconpos="left" class="voir-la-carte">Voir</a> 
+									</div>
+								</div>
 							</div>
-							
-							<div class = 'prevButton'></div>
-						
-							<div class = 'nextButton'></div>
-							<div class = 'selectorsBlock'><div class = 'selectors'></div></div>
-								
-						</div>
+						</div -->
 					</div>
-					<div data-role="navbar" class="navbar bottom-menu">
-						<ul>
-							<!--  li><a href="#" class="">Activer forfait</a></li -->
-							<!-- li><a href="#">Pannier</a></li-->
-							<li><a data-url="findshop" href="findshop.html" data-icon="search">Find a shop</a></li>
-							<!--li><a href="#">Services</a></li-->
-							<li><a href="help.html" data-icon="info">Aide</a></li>
-						</ul>
-					</div>	
 				</div>
 				<div class="content-secondary ui-block-b">
 					<ul data-role="listview" data-inset="true">
 						<li id="summary"><a data-url="summary" href="summary.html">Résumé de mon compte</a></li>
 						<!-- li><a data-url="manage" href="manage.html">Gérer mon compte</a></li>
 						<li><a data-url="service" href="service.html">Mes forfaits</a></li -->
-						<li id="shop" class="ui-btn-active"><a data-url="shop" href="shop.html">Voir les offres</a></li>
+						<li id="findshop" class="ui-btn-active"><a data-url="findshop" href="#">Trouvez un Shop</a></li>
+						<li id="shop"><a data-url="shop" href="shop.html">Voir les offres</a></li>
 					</ul>
 					<a href="#" data-role="button" data-icon="delete" data-iconpos="right" class="deconnexion">Deconnexion</a>
 				</div>

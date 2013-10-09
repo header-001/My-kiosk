@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fleo.jqm.kiosque"
     android:versionCode="0"
-    android:versionName="0.7" >
+    android:versionName="0.8" >
 
-    <uses-sdk
+    <uses-sdk 
         android:minSdkVersion="10"
         android:targetSdkVersion="15" />
 
@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+       </application>
+    
     <supports-screens
 	    android:largeScreens="true"
 	    android:normalScreens="true"

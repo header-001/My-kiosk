@@ -3,7 +3,7 @@
 	<head>
 		<title>Makis</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<meta name="viewport" content="width=device-width, user-scalable=no" />  
 		   
 		<link rel="stylesheet" type="text/css" href="../jquery/themes/custom-themeA.css" />  
 		<link rel="stylesheet" type="text/css" href="../jquery/jquery.mobile.structure-1.3.1.min.css"/>
@@ -21,17 +21,20 @@
 		<script type="text/javascript" charset="utf-8" src="../js/jquerys.voda.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/scripts.js"></script>
 	</head>
- 	<body id="body" class="theme">
+ 	<body id="body" class="theme page-interieur">
 	    <div data-role="page" id="accueil">
 	    	<div data-role="content" class="content">
 	    		<h1><strong>voda</strong>com</h1>
 	    		<h2 class="ui-btn-corner-all">My Vodacom</h2>
 	    		<ul>
 					<li>Résumé de mon compte</li>
-					<li>Gérer mes services</li>
+					<!--li>Gérer mes services</li -->
+					<li><a data-url="findshop" href="findshop-disconnect.html" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" id="findshop" class="direct-access">Localiser un shop</a></li>
 					<li>Gérer mon profil</li>
 					<li>Activer forfaits</li>
+					<li><a data-url="shop" href="shop-disconnect.html" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" id="shop" class="direct-access">voir les offres</a></li>
 					<li>Acheter</li>
+					<li><a href="help.html" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" class="direct-access" id="popupHelp">Aide</a></li>
 		    		<li><a data-url="signin" href="signin.html" data-role="button" data-inline="true" id="touch" class="touch">Toucher ici</a></li>
 	    		</ul>
 	  		</div>

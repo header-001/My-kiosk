@@ -23,38 +23,48 @@ Styles for  10.0'
 	.ui-grid-a .content-primary{
 		float:right;
     	width: 73%;
-		min-height: 633px;
+		min-height: 29em;
 		background-color:#fff;
+	}
+	.content-primary .navbar.top-menu{
+		background: none no-repeat scroll 0 0 #eaeaea;
+	}
+	.content-primary .navbar.bottom-menu{
+		background: none no-repeat scroll 0 0 #eaeaea;
+		padding-top:.5em;
 	}
 	.ui-grid-a .content-secondary{
 		float:right;
     	width: 25%;
-    	min-height: 620px;
+    	min-height: 29.5em;
     	position: relative;
 	}
 	.content-secondary.ui-block-b > * {
 	    margin-right: 3%;
 	    margin-left: 0;
 	}
+	
+	#content .login-form .ui-grid-b .ui-block-c{
+	    margin-left: 0;
+	    margin-right: 0;
+	}
 	.content-secondary .ui-li .ui-btn-text a{
     	white-space: pre-wrap;
 	}
 	.iosSlider {
-		width: 90%;
-		height: 395px;
+		height: 314px;
 		border-radius: 1em;
-		margin: 0 auto;
 	}	
 	.iosSlider .slider .item {
 		width: 929px;
-		height: 380px;
+		height: 94%;
 	}
 	.content-secondary .deconnexion{
 	   	bottom: 0;
-		margin-left: 1em;
-	    margin-right: 1em;
+		/*margin-left: 1em;
+	    margin-right: 1em;*/
 	    position: absolute;
-	    width: 81%;
+	    width: 95%;
 	}
 	.ui-responsive .edit-account .field{
 		clear:both;
@@ -74,8 +84,47 @@ Styles for  10.0'
 	.ui-responsive .edit-account .field #num {
 		margin: 1em 0 0 0;
 	}
+	.shop#content .content-primary,
+	.summary#content .content-primary{
+		padding-bottom: 0;
+	}
 	.shop .contenair{
-		width:90%;
 		margin: 0 auto;
+		min-height: 20em;
+	}
+	
+	.findshop .content-primary .entete{
+		padding: 0.5em 2em;
+		background-color : #fff;
+		margin-bottom: 1em;
+	}
+	.findshop .content-primary .entete > span{
+		display: block;
+		margin-bottom: 1em;
+	}
+	.findshop .content-primary .entete h2 {
+		font-weight: bold;
+		margin-bottom: 0.5em;
+	}
+	.summary .info {
+		margin-top: 1%;
+	}
+	.summary .forfaits {
+		min-height: 12em;
+		margin-top: 2%;
+	}
+	.summary .navbar.bottom-menu {
+		margin:0;
+	}
+	.summary .link_account {
+		margin-top: 2%;
+	}
+	.account .info.edit-account legend {
+		/*padding-top: 2%;*/
+		background-color: #fff;
+	}
+	#content .login-form .reload{
+		margin-left:.95em;
+		margin-right:.95em;
 	}
 }

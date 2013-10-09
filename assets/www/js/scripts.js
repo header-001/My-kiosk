@@ -1,4 +1,5 @@
-/* handset header
+/* 
+*handset header
  *
  * Galaxy Tab2 10.1 : Mozilla/5.0 (Linux; U; Android 4.0.4; fr-fr; GT-P5100 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
  * 
@@ -10,7 +11,7 @@ else
 	var server = "http://10.0.2.2/vdc4/httpdocs/index.php";
 	//var server = "http://192.168.200.102/vdc4/httpdocs/index.php";
 //var server = "http://localhost/vdc4/httpdocs/index.php";
-var server = "http://41.194.63.136";
+	var server = "http://41.194.63.136";
 
 var Notification = {
 
@@ -23,12 +24,13 @@ var Notification = {
     },
     
     alertDialog : function(message, title, button) {
-        console.log("alertDialog()");
-        navigator.notification.alert(message,
+        console.log("alertDialog");
+        alert(message);
+       /* navigator.notification.alert(message,
         function(){
             console.log("Alert dismissed.");
         },
-        title, button);
+        title, button);*/
         console.log("After alert");
     },
     
@@ -70,31 +72,33 @@ var Notification = {
         }
     	
     }
-}
+};
 
 var MyVoda = {
-
+		
 	condIsCheck : false,
 	currentLang : "fr",
 	currentPage : "",
 	urlVars : {},
 	msgPin : "",
+	datas:"",
+	HelpContent : [],
 	catalogParams : {
-		"limit" 	: 2,
+		"limit" 	: 5,
 		"offset"	: 0,
 		"sort"		: "priority",
 		"order"		: true,
 		"sortByAttrib" : 0,
 		"ContentType":"json",
 	},
-	datas:"",
+	
 	msg : {
 		Erreur:{
 			fr:{
 				ErreurConnexion:"Erreur de connexion",
 				Condition : "Veuiller accepter les conditions d'utilisation avant de continuer",
 				MsgBox : "Veuiller reéssayer",
-				MsgBoxChoix : "Oui,No"
+				MsgBoxChoix : ["Oui","No"]
 			}
 		},
 		Notification:{
@@ -105,29 +109,51 @@ var MyVoda = {
 			}
 		}
 	},
+	
+	currentShop : {
+		nom : "",
+		latitude : "-4.3297220",
+		longitude : "15.3150000"
+	},
+	
+    initialize: function() {
+        this.bindEvents();
+    },
 
-	onDeviceReady : function(){
-		/*
+    bindEvents: function() {
+    	if(navigator.platform == "Win32"){
+    		this.hostmane = "http://localhost/platemobile/index.php";
+    		$(document).on('pageshow',function(){  
+    			MyVoda.onDeviceReady();
+	    	});
+    	}else
+    		document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+
+    onDeviceReady: function() {
+
 		if($('.ui-page-active#home').length){
-			var timeout = setTimeout(function(){
+			var timeout="";
+			timeout = setTimeout(function(){
 				$.mobile.changePage( "accueil.html", { transition: "pop"} );
 					clearTimeout(timeout);
 					}, 2000);
+					
 		}
-		*/
-	},
-	/* 
+    },
+
+    /* 
 	 * fixe la taille du popoup par rapport à la taille du screem 
 	 */
 	fixePopup : function($popup){
 		
 		var pageH = $(".ui-page-active").height();
 		var pageW = $(".ui-page-active").width();
-		var maxHeight = parseInt(pageH - 2*(pageH/10));
-		var maxWidth = parseInt(pageW - 2*(pageW/10));
+		var maxHeight = parseInt(pageH - 20);
+		var maxWidth = parseInt(pageW - 20);
 		
-		$popup.css( {"max-height": maxHeight+ "px","width": maxWidth+ "px"});
-		$popup.find( ".scrollable" ).css( {"max-height": $popup.height() - 3*($popup.height()/10)+ "px"});
+		$popup.css( {"max-height": maxHeight+ "px","width": parseInt(maxWidth-50)+ "px"});
+		$popup.find( ".scrollable" ).css( {"max-height": parseInt($popup.height() - 100)+ "px"});
 	},
 	
 	/* 
@@ -138,16 +164,19 @@ var MyVoda = {
 		if($('a[data-url]').length){
 			$('a[data-url]').each(function(i, item){
 				
-				$(item).attr('data-url', MyVoda.currentLang + '|'+ $(item).data('url'))
+				$(item).attr('data-url', MyVoda.currentLang + '|'+ $(item).data('url'));
 			});
 		}
 		if($('.link_account').length){
-			$('.link_account a').attr('href', $('.link_account a').attr('href') + "?s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'] +"&page=" + $('.link_account a').data('url') + "&lang=" + MyVoda.currentLang );
+			$('.link_account a').attr('href', $('.link_account a').attr('href') + "?pin=" + MyVoda.urlVars['pin'] + "&num=" + MyVoda.urlVars['num'] +"&page=" + $('.link_account a').data('url') + "&lang=" + MyVoda.currentLang );
 		}
 
-		$(".content-secondary ul a").each(function(i, item){
-			$(item).attr('href', $(item).attr('href') + "?s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'] +"&page=" + $(item).data('url') + "&lang=" + MyVoda.currentLang );
+		$(".content-secondary ul a, .navbar.bottom-menu a").each(function(i, item){
+			if($(item).parents('li').attr('id')!="direct-access-loggin")
+				$(item).attr('href', $(item).attr('href') + "?pin=" + MyVoda.urlVars['pin'] + "&num=" + MyVoda.urlVars['num'] +"&page=" + $(item).data('url') + "&lang=" + MyVoda.currentLang );			
 		});
+
+		$('.deconnexion').attr("data-num",MyVoda.urlVars['num']);
 	},
 	
 	/*
@@ -163,6 +192,7 @@ var MyVoda = {
 			break;
 			
 			case "summary":
+				console.log(MyVoda);
 				this.actionFetchInfo();
 				this.actionGetBal();
 			break;
@@ -170,10 +200,20 @@ var MyVoda = {
 			case "account":
 				this.actionFetchInfo();
 			break;
+			
 			case "shop":
-					if($('.iosSlider').length) {
-						$.loadCatalog();
-					}
+				if($('.iosSlider').length) {
+					$.iossliderStart=false;
+					$.loadCatalog();
+				}
+			break;
+			case "findshop":
+				if($('.findshop').length) {
+				
+					$.findshop({
+						"type" : "pronvinces"
+					});
+				}
 			break;
 		}
 	},
@@ -182,20 +222,21 @@ var MyVoda = {
 	 * 
 	 */
 	doAction : function(action, datas, datasArray){
+		
 		MyVoda.datas = datas;
 		switch(action){
 			case "ActionChoixLang":
-				var url = datasArray[0]['value']
+				var url = datasArray[0]['value'];
 				$.mobile.changePage( url , {});
 			break;
 			case "ActionGenerationPin":
-				this.actionGenerationPin(datas);
+				this.actionGenerationPin(datas,datasArray);
 			break;
 			case "ActionLoggin":
-				this.actionLoggin(datas);
+				this.actionLoggin(datas,datasArray);
 			break;
 			case "ActionReGenerationPin":
-				this.actionReGenerationPin(datas);
+				this.actionReGenerationPin(datas,datasArray);
 			break;
 			case "ActionEditCompte":
 				this.actionEditCompte(datas);
@@ -203,49 +244,55 @@ var MyVoda = {
 		}
 	},
 	
-	actionGenerationPin : function(datas){
+	actionGenerationPin : function(datas,datasArray){
 		var url = "pin.html?page=" + "pin&lang=" + MyVoda.currentLang;
 		var action = "SetSession";
 		
-		$.myModaLoad({
+		$.myVodaLoad({
 			"url"		: url,
 			"doaction"	: action,
-			"datas"		:datas + "&Doaction=" + action
+			"datas"		:datas + "&Doaction=" + action,
+			"num" : datasArray[0]['value']
 		});
 	},
 	
-	actionLoggin : function(datas){
+	actionLoggin : function(datas,datasArray){
 		var url = "summary.html?page=" + "summary&lang=" + MyVoda.currentLang;
 		var action = "SingIn";
-
-		$.myModaLoad({
+		console.log(datasArray);
+		$.myVodaLoad({
 			"url"		: url,
 			"doaction"	: action,
-			"datas"		:datas + "&Doaction=" + action
+			"datas"		:datas + "&Doaction=" + action,
+			"num" : datasArray[0]['value'],
+			"pin" : datasArray[1]['value']
 		});
 	},
 	
-	actionReGenerationPin : function(datas){
+	actionReGenerationPin : function(datas,datasArray){
 		var action = "SingIn";
 		
-		$.myModaLoad({
+		$.myVodaLoad({
 			"doaction"	: action,
-			"resendPin"	: true,
-			"datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true
+			"resendPin"	: 1,
+			"datas"		:datas + "&Doaction=" + action + "&ResendPin=" + true,
+			"num" : datasArray[0]['value']
 		});
 	},
 	
 	actionFetchInfo : function(){
-
-		$.myModaLoad({
+		console.log(MyVoda);
+		$.myVodaLoad({
 			"doaction"	: "FetchInfo",
-			"datas"		:"s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n']
+			"datas"		:"pin=" + MyVoda.urlVars['pin'] + "&num=" + MyVoda.urlVars['num'],
+			"num" : MyVoda.urlVars['num'],
+			"pin" : MyVoda.urlVars['pin']
 		});
 	},
 	
 	actionGetBal : function(){
 		
-		var num = MyVoda.urlVars['n'];
+		var num = MyVoda.urlVars['num'];
 		var action = "GetBal";
 		
 		$.bundlesBalance({
@@ -260,36 +307,36 @@ var MyVoda = {
 			"limit"		: MyVoda.catalogParams.limit,
 			"sort"		: MyVoda.catalogParams.sortBy,
 			"order"		: MyVoda.catalogParams.order
-		})
+		});
 	},
 	
 	actionEditCompte : function(datas){
 		var action = "EditCompte";
 		
-		$.myModaLoad({
+		$.myVodaLoad({
 			"url" : "summary.html",
-			"paramsUrl" : "?page=" + "summary&lang=" + MyVoda.currentLang + "&s=" + MyVoda.urlVars['s'] + "&n=" + MyVoda.urlVars['n'],
+			"paramsUrl" : "?page=" + "summary&lang=" + MyVoda.currentLang + "&pin=" + MyVoda.urlVars['pin'] + "&num=" + MyVoda.urlVars['num'],
 			"doaction"	: action,
-			"datas"		: datas + "&Doaction=" + action + "&s=" + MyVoda.urlVars['s']
+			"datas"		: datas + "&Doaction=" + action + "&pin=" + MyVoda.urlVars['pin'],
+			"num" : MyVoda.urlVars['num'],
+			"pin" : MyVoda.urlVars['pin']
 		});
 	}
+};
 
-}
 
-
-document.addEventListener("deviceready", MyVoda.onDeviceReady, false);
-$(document).ready(function(){
-	MyVoda.onDeviceReady();
-});
+MyVoda.initialize();
 
 $( window ).on( "orientationchange", function( event ) {
+	event.preventDefault();
 	var $popup = $("#popupCondition");
 	if($popup.length > 1){
 		MyVoda.fixePopup($popup);
 	}
 });
-$(document).bind('pageshow',function(){
 
+$(document).bind('pageshow',function(event){
+	
 	//initialisation
 	MyVoda.urlVars = $.getVarsFromUrl();
 	MyVoda.currentLang = MyVoda.urlVars['lang'];
@@ -299,13 +346,7 @@ $(document).bind('pageshow',function(){
 	
 	MyVoda.pageLoaded(MyVoda.currentPage);
 
-	
-	if($('.ui-page-active#home').length){
-		var timeout = setTimeout(function(){
-			$.mobile.changePage( "accueil.html", { transition: "pop"} );
-				clearTimeout(timeout);
-				}, 2000);
-	}
+
 	// Envoie du formualire
 	$('.submit').on('click',function(){
 		
@@ -336,13 +377,15 @@ $(document).bind('pageshow',function(){
 		}else
 			MyVoda.condIsCheck=false;
 		
-		var timeout = setTimeout(function(){
+		var timeout="";
+		timeout = setTimeout(function(){
 			parent.history.back();
 			clearTimeout(timeout);
 		}, 500);
 	});
 	
-	$('a[data-url]').click(function(){
+	$('a[data-url]').on('click',function(event){
+	
 		var nextPage = $(this).attr('href') + "?page=" + $(this).data('url') + "&lang=" + MyVoda.currentLang;
 		var id = $(this).attr('id');
 		
@@ -386,7 +429,7 @@ $(document).bind('pageshow',function(){
 			"sort"		: MyVoda.catalogParams.sortBy,
 			"order"		: MyVoda.catalogParams.order,
 			"sortByAttrib" : 1
-		})
+		});
 		//$('.iosSlider').iosSlider('goToSlide', 1);
 		
 		if($.Order == "true"){
@@ -396,8 +439,84 @@ $(document).bind('pageshow',function(){
 		}
 		
 	});
+	$('.deconnexion').on('click',function(event){
+		
+		$.logout({
+			"redirect"	: "../index.html",
+			"num"		: MyVoda.urlVars['num'],
+			"doaction"	: "Logout",
+		});
+		
+		return false;
+	});
+
+	$('.voir-la-carte').on('click',function(event){ 
+	});
+	
+	$(document).delegate(".voir-la-carte a","click",function(){
+		MyVoda.currentShop.latitude = $(this).data('latitude');
+		MyVoda.currentShop.longitude = $(this).data('longitude');
+		var params = "";
+		params = "?prevPage="+MyVoda.currentPage+"&lang="+MyVoda.currentLang+"&lat=" + $(this).data('latitude') + "&long=" + $(this).data('longitude');
+		var url = "carte.html" + params;
+		$.mobile.changePage( url , {});
+		return false;
+	});
+	
+	$('.roll-back').on('click',function(event){
+
+		event.stopPropagation();
+		event.preventDefault();
+		var url = MyVoda.urlVars['prevPage'] + ".html?lang="+MyVoda.currentLang;
+		$.mobile.changePage( url , {});	
+		return false;
+	});
+	//console.log(MyVoda.urlVars);
+	return false;
 });
 
+$( document ).on( "pagebeforechange", function( event, data ) {
 
+	event.stopPropagation();
+	//event.preventDefault();
+});
 
+var longitude = MyVoda.currentShop.longitude;
+var latitude = MyVoda.currentShop.latitude;
+var title = MyVoda.currentShop.nom;
 
+var icon_path = "../img/phones.png";
+
+function loadmap(){
+	//alert("chargement de la carte ...");
+	var mapElt = document.getElementById('map');
+	var latlong = new google.maps.LatLng(latitude, longitude);
+	var icon_path = "../img/phones.png";
+	var mapOptions = {
+		center: latlong,
+		mapTypeControl: false,
+		zoomControl: true,
+		zoomControlOptions: {
+			style: google.maps.ZoomControlStyle.SMALL
+		},
+		zoom: 15,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(mapElt, mapOptions);
+	var marker = new google.maps.Marker({icon : icon_path, map : map, visible: true, title : title, position : latlong});
+}
+
+$(document).on('pageshow',function(event,data){
+
+	console.log(data);
+	if($('.ui-page-active #map').length > 0){
+		//importScripts("http://maps.googleapis.com/maps/api/js?sensor=false");
+		
+		longitude = MyVoda.currentShop.longitude;
+		latitude = MyVoda.currentShop.latitude;
+		title = MyVoda.currentShop.nom;
+		loadmap();
+		//google.maps.event.addDomListener(window, 'load', loadmap);
+	}
+});
+//google.maps.event.addDomListener(window, 'load', loadmap);

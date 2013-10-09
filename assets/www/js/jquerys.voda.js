@@ -25,17 +25,20 @@
 	    return vars;
 	};
 	
-	$.myModaLoad = function(options){
+	$.myVodaLoad = function(options){
 		var defauts = {
 			"url"		: "",
+			"num"		: "",
+			"pin"		: "",
 			"doaction"	: "",
-			"resendPin"	:false,
-			"datas"		:""
+			"resendPin"	:0,
+			"datas"		:"",
 		};
-		
-		var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::login::" + options.doaction +"::?ContentType=json";
 		var params = $.extend(defauts, options);
 
+		var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::login::" + params.doaction +"::"+ params.num +"::"+ params.pin +"::"+params.resendPin+"?ContentType=json";
+		
+		console.log(params);
 		console.log(url);
 		//Lance la requete server
 		ajaxQuery(url,params);
@@ -80,6 +83,131 @@
 		
 	};
 	
+	$.myVodaLoadContent = function(options){
+
+		
+		var defauts={
+			"type"	: "",
+			"contenaire" : "#content",
+			"data" : ""
+		};
+
+		var params=$.extend(defauts, options);
+		
+		var type= params.type;
+		
+		var result = {};
+		var url = "";
+		
+		if(type=="help"){
+			url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::fetchcontent::help::?ContentType=json";
+		}
+		
+		if(url){
+
+			$.ajax({  
+				 type: 'POST',
+				 url: url, 
+				 data: params.datas,
+			     dataType: 'json',  
+			     success:  function(data){
+			    	// MyVoda.HelpContent = data.content;
+			 		//$("#dialogPageHelp #content").html(MyVoda.HelpContent.body)
+			     },
+			     error: function(){
+			    	 
+			     },
+			     beforeSend: function(){
+			    		$.mobile.loading( "show", {
+			    			text: "Chargement",
+			    			textVisible: true
+			    			});
+			     },
+			     complete: function(){
+			    		 onCompleteFunction(params);
+			     }
+			 });
+		}
+		return result;
+	};
+	
+	$.logout = function(params){
+
+		var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::logout::" + params.num +"::?ContentType=json";
+			
+		console.log(url);
+		//Lance la requete server
+		ajaxQuery(url,params);
+		return false;
+	};
+	
+	$.findshop = function(options){
+			
+		var defauts={
+			"data" : "",
+			"doaction": ""
+		};
+
+		var params=$.extend(defauts, options);
+
+		var data = params.data  + "&type=" + params.type;
+		
+		if(params.type=="pronvinces"){
+			
+			var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::findshop::pronvinces::?ContentType=json";
+			//var url = server + "/" + MyVoda.currentLang + "/androidapi/getcontent/FindShop/pronvinces/json";
+			ajaxQueryShop(url, params, data);
+			
+			var timeout ="";
+			timeout = setTimeout(function(){
+				var idProvince = 0;
+				$.findshop({
+					"type" : "shops",
+					"idProvince" : idProvince,
+					"limit" : 2
+				});
+				clearTimeout(timeout);
+			}, 2000);
+			
+		}
+
+		if(params.type=="shops"){
+			
+			data = data  + "&idProvince=" + params.idProvince;
+			
+			var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::findshop::shops::"+params.idProvince+"::?ContentType=json";
+			//var url = server + "/" + MyVoda.currentLang + "/ezjscore/call/appmobile::fetchcontent::findshop::?ContentType=json";
+			//var url = server + "/" + MyVoda.currentLang + "/androidapi/getcontent/FindShop/shops/json";
+			ajaxQueryShop(url, params, data);
+		}
+		
+	};
+	ajaxQueryShop = function(url, params, data){
+		console.log(url);
+		$.ajax({  
+			type: 'POST',url: url, data: data ,dataType: 'json',  
+			 
+			success:  function(result){
+				console.log(result);
+				addToList(result.content,params);
+				
+			},
+			error: function(){
+		    	
+			},
+			beforeSend: function(){
+				$.mobile.loading( "show", {
+					text: "Chargement",
+					textVisible: true
+		    	});
+			},
+			complete: function(){
+				onCompleteFunction(params);
+			}
+		});
+	};
+	
+	
 	/*
 	 *  Constitution et execution de la réquete
 	 */
@@ -88,7 +216,6 @@
 			 type: 'POST',
 			 url: url, 
 			 data: params.datas,
-		     timeout : 30000,
 		     dataType: 'json',  
 		     success:  function(result){
 		    	 onSuccessFunction(result,params);
@@ -119,7 +246,7 @@
 	     	success:  function (data) {
 	     		MyVoda.catalogParams.offset = data.content.offset;
 	     		MyVoda.catalogParams.limit = data.content.limit;
-	     		MyVoda.catalogParams.sortByAttrib = data.content.sortByAttrib
+	     		MyVoda.catalogParams.sortByAttrib = data.content.sortByAttrib;
 	     		TotalItem = data.content.total_count;
 	     		if(data.content.count == 0){
 		 			//var msg = MyVoda.msg.Notification[MyVoda.currentLang].Nobjects;
@@ -136,15 +263,15 @@
 			     			
 			     		$(".slider").append("<div class = 'item'>" + img + title + prix + "</div>");
 		     		});
-		     		
+		     		var method = "";
 		     		if(!$.iossliderStart){
-			     		var method = "start";
+			     		method = "start";
 		     			$.iossliderStart=true;
 		     			slideInit(TotalItem);
 		     		}else{
-		     			var method = "update";
+		     			method = "update";
 		     		}
-		     		
+		     		console.log('methode:' + method);
 		     		$.iosSliderCall(method);
 	     		}
 	     	},
@@ -191,7 +318,7 @@
 	};
 
 	function slideLoaded(args){
-		$(".count_article").html(TotalItem + " offres")
+		$(".count_article").html(TotalItem + " offres");
 		for(var i = 0; i < args.data.numberOfSlides; i++) {
 			var item = $('.selectors').children('.item')[i];
 			$(item).addClass('active');
@@ -211,8 +338,8 @@
 		$('.selectors .item').removeClass('selected');
 		$('.selectors .item:eq(' + (args.currentSlideNumber - 1) + ')').addClass('selected');
 		
-		currentSlideNumber = args.currentSlideNumber
-		numberOfSlides = args.data.numberOfSlides
+		currentSlideNumber = args.currentSlideNumber;
+		numberOfSlides = args.data.numberOfSlides;
 		if(currentSlideNumber == numberOfSlides){
 			$.loadCatalog({
 				"limit"		: MyVoda.catalogParams.limit,
@@ -220,7 +347,7 @@
 				"order"		: MyVoda.catalogParams.order,
 				"offset"	: parseInt(parseInt(MyVoda.catalogParams.limit) + parseInt(MyVoda.catalogParams.offset)),
 	     		"sortByAttrib" : MyVoda.catalogParams.sortByAttrib
-			})
+			});
 		}
 	}
 	function slideInit(totalItem){
@@ -231,12 +358,13 @@
 	}
 	
 	onSuccessFunction= function(result,params){
-		
+		console.log(result);
 		switch(params.doaction){
-		 
+		
 		 	case "SetSession":
 		 		if(result.content.error || result.error){
-	 				var err = result.content.msg;
+	 				var err = result.content.ErreurNumero;
+			 		
 	 				Notification.alertDialog(err);
 	 				Notification.vibrate(0.5);
 		 		}
@@ -256,7 +384,7 @@
 		 			if(params.resendPin)
 						$('#tempopin').html(result.content.msg);
 		 			else
-			 			$.mobile.changePage( params.url + "&n=" + result.content.num + "&s=" + result.content.session , {}); 
+			 			$.mobile.changePage( params.url + "&num=" + result.content.num + "&pin=" + result.content.session , {}); 
 		 		} 
 		 	break;
 		 	
@@ -265,7 +393,7 @@
 		 	break;
 		 	
 		 	case "GetBal" :
-		 		__onSuccessBalance(result,params)
+		 		__onSuccessBalance(result,params);
 		 	break;
 		 	
 		 	case "Logout":
@@ -276,8 +404,9 @@
 		 		}else{
 		 	  		$.mobile.loading( "hide");
 		 			Notification.alertDialog(MyVoda.msg.Notification[MyVoda.currentLang].Deconnexion);
-		 			$.mobile.changePage( params.url , {});
+		 			$.mobile.changePage( params.redirect , {});
 		 		}
+		 	break;
 		 	case "EditCompte":
 		 		if(result.content.error || result.error){
 		 	  		$.mobile.loading( "hide");
@@ -295,7 +424,7 @@
 	
 	onErrorFunction = function(params){
 		console.log(params);
-		var action = params.doaction
+		var action = params.doaction;
 		var title = MyVoda.msg.Erreur[MyVoda.currentLang].ErreurConnexion;
 		var msgBox = MyVoda.msg.Erreur[MyVoda.currentLang].MsgBox;
 		var msgBoxChoix = MyVoda.msg.Erreur[MyVoda.currentLang].MsgBoxChoix;
@@ -331,7 +460,7 @@
 			//$(".info .profil").html(datas.compte.type_profil);
 			 
 		 }
-	}
+	};
 	__onSuccessBalance = function(data,params){
 		
 		var solde = data.content.Solde;
@@ -341,7 +470,7 @@
 	};
 	
 	setForfait = function(maxBundles,bundles){
-		var forfait = ['.call.forfait', '.sms.forfait','.data.forfait'];
+		//var forfait = ['.call.forfait', '.sms.forfait','.data.forfait'];
 		
 		var voice = bundles.voice,
 		sms = bundles.sms,
@@ -372,7 +501,8 @@
 			$(this).find(".rest").find("span").append();
 		});
 		*/
-		var timeout = setTimeout(function(){
+		var timeout = "";
+		timeout = setTimeout(function(){
 			setProress(maxVoice, voice, maxSms, sms, maxData, data);
 			clearTimeout(timeout);
 		}, 2000);
@@ -410,5 +540,65 @@
 		element.find('div').animate({ width: widthProgress }, 5000).html(forfait);
 
 	};
+	
+	addToList = function(datas, params) {
+    	
+		if(params.type=="shops"){
+			var idProvince = 0;
+			var next = false;
+			$.each(datas, function(i, item){
+				idProvince = item.idProvince;
+				if(params.limit > idProvince){
+					next = true;
+					$.each(item.shops, function(i, shop){
+					
+						var entry = "<div class='inline' id='shop'" + i +">"
+								+ "<div class='part-left'>"
+								+ "<h2>" + shop.nom + "</h2>"
+								+ "<p>" + shop.adresse + "</p>"
+								+ "<p>" + shop.telephone + "</p>"
+								+ "</div>"
+								+ "<div class='part-right'>"
+								+ "<h2>Heures d'ouverture/fermeture</h2>"
+								+ "<div>" + shop.heures + "</div>"
+								+ "</div>"
+								+ "<div style='clear:both'></div>"
+								+ "<div class='voir-la-carte'>"
+								+ "<a data-role='button' data-inline='true' data-icon='grid' data-iconpos='left' data-latitude='"+ shop.gps[1] +"' data-longitude='"+ shop.gps[2] +"'>Voir</a>"
+								+ "</div>"
+								+ "<div class='carte' id='carte-shop-"+ i +"'></div>"
+								+ "</div>";
+						$('#collapsible-content-' + idProvince).append(entry).trigger( "create" );
+					});
+				}
+			});
+			if(next){
+				$.findshop({
+					"type" : "shops",
+					"idProvince" : parseInt(idProvince) + 1,
+					"limit" : $.limitProvinces
+				});
+			}
+		}else{
+			$.limitProvinces = datas.pronvinces.length;
+			var items = "";
+	    	$.each(datas.pronvinces, function(i, pronvince){
+
+				var item = 	'<div data-role="collapsible" class="pronvince pronvince-' + pronvince.id +'" id="'+ pronvince.id +'" >'
+	    				+ '<h3>'+ pronvince.name +'</h3>'
+	    				+ '<div class="collapsible-content" id="collapsible-content-' + pronvince.id +'">'
+	         			+ '</div>'
+	         			+ '</div>';
+				//$(item).appendTo('#pronvinces');
+				items += item;
+				//$(".pronvince h3").unbind('click').bind('click',function(){ });
+			});
+			$('#pronvinces').html(items);
+	      	//$('.pronvince').trigger('create');
+	      	$('#pronvinces').collapsibleset("refresh", "inset" );
+	    	//$('#pronvinces').trigger( "updatelayout" );
+		}
+		
+    };
 	
 })(window.jQuery);

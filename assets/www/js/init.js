@@ -1,6 +1,9 @@
 $(document).bind("mobileinit", function(){
-	$.mobile.defaultPageTransition="slide";
+	 $.support.cors = true;
+	/*$.mobile.defaultPageTransition="slide";*/
 	$.mobile.allowCrossDomainPages = true;
+	$.mobile.pushStateEnabled = false;
 	//$.mobile.phonegapNavigationEnabled = true
 	//$.mobile.touchOverflowEnabled  = true;
+	$.mobile.defaultPageTransition = 'none';
 });

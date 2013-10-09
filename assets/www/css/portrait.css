@@ -8,6 +8,9 @@ Styles for  10.0'
 	#home {
 	 	height: 1280px;
 	 }
+	 #page {
+		padding-bottom: 36px;
+	}
 	#accueil .content[data-role="content"]{
 		margin-top:40%;
 		width:90%;
@@ -70,32 +73,48 @@ Styles for  10.0'
 		font-size:1em;
 	}
 	.summary .info fieldset {
-		width: 90%;
 		margin: 0 auto;
-		padding: 1% 2%;
+		/*padding: 1% 5%;*/
 	}
 	.summary .content-primary > div {
-		width: 90%;
+		/*width: 90%;*/
 		margin: 3% auto 0 auto;
+	}
+	.summary .content-primary .block.info {
+		margin: 0 auto;
+		padding-top: 3%;
 	}
 	.summary .link_account {
 		padding: 1em 0;
 	}
 	.summary .link_account a{
-		margin-left: 3%;
+		margin-left: 5%;
 	}
 	.shop .contenair{
-		width:95%;
 		margin: 0 auto;
 	}
 	.iosSlider{
-		width: 90%;
 		height: 430px;
 		border-radius: 1em;
-		margin: 0 auto;
 	}
 	.iosSlider .slider .item {
 		width: 729px;
 		height: auto;
+	}
+	#content.findshop .content-primary{
+		min-height: 28em;
+	}
+	.findshop .content-primary .entete{
+		padding: 0.5em 1em;
+		background-color : #fff;
+		margin-bottom: 1em;
+	}
+	.findshop .content-primary .entete > span{
+		display: block;
+		margin-bottom: 1em;
+	}
+	.findshop .content-primary .entete h2 {
+		font-weight: bold;
+		margin-bottom: 0.5em;
 	}
 }

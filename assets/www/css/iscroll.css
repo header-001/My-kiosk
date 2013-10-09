@@ -105,9 +105,15 @@
 	top: 0;
 	left: 0;
 	overflow: hidden;
+	width: 100%;
+	margin-top:1em;
 }
 .count_article {
-	margin: .5em 0;
+	background: #fff;
+	padding: 0.1em 1em;
+	margin: 0;
+	min-height: 1.2em;
+	margin-top:0.5em;
 }
 			
 .iosSlider .prevButton {
@@ -137,28 +143,35 @@
 			
 .iosSlider .slider .item {
 	position: relative;
-	top: 1em;
+	top: 0.5em;
 	left: 0;
 	margin: 0;
+	text-align: center;
 }
 			
 .iosSlider .slider .item img{
 	/*width: 40%;*/
-	height: 80%;
-	float:left;
-	margin-right:1%;
+	height: 87%;
+	/*float: left;
+	margin-left: 25px;*/
 }
 
 
 .iosSlider .slider .item .title {
-	width: 95%;
+	/*width: 95%;*/
 	font-weight: bold;
 	margin-bottom: .5em;
 	font-size: 1.5em;
+	position: absolute;
+	top: 1.5em;
+	left: 570px;
+	right: 10px;
+	display:none;
 }
 
 .iosSlider .slider .item .prix {
 	font-size: 2em;
+	display:none;
 }
 
 .iosSlider .slider .item .text{
@@ -166,7 +179,7 @@
 }
 .iosSlider .selectorsBlock {
 	position: absolute;
-	bottom: 10px;
+	bottom: 1px;
 	width: 100%;
 	height: auto;
 }
@@ -176,16 +189,16 @@
 	top: 0;
 	left: 0;
 	margin: 0 auto;
-	width: 90%;
+	width: 93%;
 	height: 100%;
-	text-align:center;
+	/*text-align:center;*/
 	overflow: hidden;
 }
 
 .iosSlider .selectorsBlock .selectors .item {
-	width:1em;
-	height:1em;
-	margin: 0 0 0 .5em;
+	width:.8em;
+	height:.8em;
+	margin: 0 .4em 0 0;
 	display:inline-block;
 	background: #aaa;
 	

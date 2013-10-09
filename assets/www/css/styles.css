@@ -7,7 +7,15 @@ ul,li,a,
 	margin:0;
 	padding:0;
 }
-.ui-page { -webkit-backface-visibility: hidden; } 
+
+/*** patch for jquerymobile page flicker that was happening ***/
+/*
+.ui-page {
+	height: 100% !important; 
+	-webkit-backface-visibility: hidden;
+}
+.input { outline: none; }
+*/
 .ui-icon, .ui-icon-searchfield:after {
 background-color: #b40e0e /*{global-icon-color}*/;
 }
@@ -28,6 +36,10 @@ html,
 	font-size: 1em;
 	text-shadow: none;
 	font-family:"century gothic", century gothic, sans-serif;
+	padding-bottom: 20px;
+}
+#body.page-interieur{
+	background:none no-repeat scroll 0 0 #eaeaea;
 }
 #home{
 	background:none;
@@ -107,6 +119,18 @@ html,
 #accueil .touch .ui-btn-text{
 	font-size: 1.5em;
 }
+#accueil .direct-access{
+	margin:0;
+	background: none;
+	color: #fff;
+	text-shadow: none;
+	padding: 0;
+}
+#accueil .direct-access .ui-btn-inner{
+	background: none;
+	padding: 0.1em 1.1em .1em .5em;
+	font-size: 1em;
+}
 .ui-page .langues .ui-submit{
 	margin-top:5%;
 }
@@ -132,7 +156,9 @@ html,
 #popupCondition .ui-checkbox .ui-btn-text{
 	font-size: 2em;
 }
-
+.dialogPage .ui-dialog-contain{
+	max-width:100%;
+}
 /**********/
 #content  .login-form .ui-block-a,
 #content  .login-form .ui-block-b,
@@ -141,14 +167,18 @@ html,
 }
 #content .login-form .ui-block-b,
 #content .login-form .ui-block-c {
-	float:right;
+	/*float:right;*/
+}
+#content .login-form .ui-grid-a .ui-block-b{
+	float: right;
 }
 #content .login-form .ui-block-a ~ .ui-block-b .ui-btn-inner{
 	padding:1em 10em;
 }
 #content .login-form .ui-grid-b .ui-block-a ~ .ui-block-b .ui-btn-inner,
 #content .login-form .ui-grid-b .ui-block-a ~ .ui-block-c .ui-btn-inner{
-	padding:1em 6em;
+	/*padding:1em 6em;*/
+	padding:1em 4em;
 }
 #content .login-form .ui-grid-a .ui-block-a + .ui-block-b .ui-btn-inner{
 	padding-left:10em;
@@ -205,6 +235,14 @@ html,
 	font-size:1.2em;
 	padding-bottom: 1em;
 }
+
+#content.findshop .content-primary,
+#content.shop .content-primary,
+#content.summary .content-primary{
+	background:none;
+}
+
+
 #content .content-primary .ui-btn-inner,
 #content .content-secondary .ui-btn-inner{
 	font-size:1em;
@@ -212,7 +250,9 @@ html,
 .content-primary .navbar.bottom-menu .ui-btn-inner{
 	font-weight: normal;
 }
-
+.navbar.bottom-menu{
+	margin-top: 1em;
+}
 .summary{
 	
 }
@@ -221,17 +261,17 @@ html,
 .summary .info fieldset{
 	background-color:#fff;
 	border : 1px solid #d5d5d5;
-	padding: 1em;
-	width:80%;
 	margin-left: 5%;
 	margin-top: 0;
+	padding : 1em 1em 1em 0;
 }
 .summary .info fieldset legend{
-   /*background-color:#f8f8f8;*/
+   background:none no-repeat scroll 0 0 #eaeaea;
    margin-left: 2em;
    color:#666666;
 }  
-.summary .info div{
+.summary .info fieldset > div{
+	margin-left:1em;
 }
 .summary .info div label{
 	color:#666666;
@@ -249,7 +289,7 @@ html,
     font-weight: bold;
 }
 .summary .forfaits{
-	width:90%;
+	/*width:90%;*/
 	margin-left: 5%;
 	margin-top: 3%;
 }
@@ -257,7 +297,7 @@ html,
 	background-color:#fff;
 	border : 1px solid #d5d5d5;
 	padding: 1em;
-	width:80%;
+	/*width:80%;*/
 	margin:  3% 0 0 5%;
 	color:#666666;
 }
@@ -280,8 +320,11 @@ html,
 .account .info.edit-account fieldset{
 	border : 1px solid #d5d5d5;
 	padding: 0 0 2% 3%;
+	margin-top:2%;
+	width: 95%;
 }
 .account .info.edit-account legend{
+   background:none no-repeat scroll 0 0 #eaeaea;
 	padding:0.5% 1%;
 	margin: 0 1% 1% 0; 
 	font-size: 1.2em;
@@ -298,7 +341,7 @@ html,
 	border : 1px solid #d5d5d5;
 }
 .summary .forfaits fieldset legend{
-   background-color:#f8f8f8;
+   background:none no-repeat scroll 0 0 #eaeaea;
    margin-left: 2em;
    color:#666666;
 }
@@ -412,4 +455,64 @@ html,
 .shop #list span{
 	font-weight: bold;
 }
-
+#pronvinces{
+}
+#pronvinces .pronvince{
+}
+#pronvinces .pronvince .collapsible-content{
+}
+#pronvinces .pronvince .collapsible-content .inline{
+	border-bottom: 1px solid #047FBA;
+    clear: both;
+    padding-bottom: 1em;
+    width: 100%;
+	font-size:1em;
+}
+#pronvinces .pronvince .collapsible-content .inline *{
+	font-size:1em;
+}
+.collapsible-content .part-left{
+	float: left;
+    margin: 0;
+    width: 55%;
+}
+.collapsible-content .part-left h2{
+	color: #E42322;
+	font-weight: bold;
+}
+.collapsible-content .part-right{
+	clear: right;
+    float: left;
+    margin: 0 2%;
+    width: 41%;
+	padding-top: 1.5em;
+}
+.collapsible-content .part-left >*,
+.collapsible-content .part-right >*{
+    margin: 0.3em 0;
+}
+.collapsible-content .part-left > * p,
+.collapsible-content .part-right > * p{
+    margin:0;
+}
+.collapsible-content .part-right h2{
+	font-weight: bold;
+}
+.collapsible-content .voir-la-carte{
+	text-align:right;
+}
+.collapsible-content .voir-la-carte a .ui-btn-inner{
+	width: 3em;
+}
+#map{
+	width: 99%;
+	height: 510px;	
+	margin: 0 auto;
+}
+.help{
+	text-shadow: none;
+	background-color:#FFFFFF;
+}
+.help h2{
+	font-weight:bold;
+}
